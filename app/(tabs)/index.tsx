@@ -1,74 +1,96 @@
-import { Image, StyleSheet, Platform } from 'react-native';
-
-import { HelloWave } from '@/components/HelloWave';
-import ParallaxScrollView from '@/components/ParallaxScrollView';
-import { ThemedText } from '@/components/ThemedText';
-import { ThemedView } from '@/components/ThemedView';
+import { Pressable, ScrollView, Text, View } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
+import AntDesign from "@expo/vector-icons/AntDesign";
+import { cn } from "@/lib/utils";
+import Entypo from "@expo/vector-icons/Entypo";
 
 export default function HomeScreen() {
   return (
-    <ParallaxScrollView
-      headerBackgroundColor={{ light: '#A1CEDC', dark: '#1D3D47' }}
-      headerImage={
-        <Image
-          source={require('@/assets/images/partial-react-logo.png')}
-          style={styles.reactLogo}
-        />
-      }>
-      <ThemedView style={styles.titleContainer}>
-        <ThemedText type="title">Welcome!</ThemedText>
-        <HelloWave />
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 1: Try it</ThemedText>
-        <ThemedText>
-          Edit <ThemedText type="defaultSemiBold">app/(tabs)/index.tsx</ThemedText> to see changes.
-          Press{' '}
-          <ThemedText type="defaultSemiBold">
-            {Platform.select({
-              ios: 'cmd + d',
-              android: 'cmd + m',
-              web: 'F12'
-            })}
-          </ThemedText>{' '}
-          to open developer tools.
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 2: Explore</ThemedText>
-        <ThemedText>
-          Tap the Explore tab to learn more about what's included in this starter app.
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 3: Get a fresh start</ThemedText>
-        <ThemedText>
-          When you're ready, run{' '}
-          <ThemedText type="defaultSemiBold">npm run reset-project</ThemedText> to get a fresh{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> directory. This will move the current{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> to{' '}
-          <ThemedText type="defaultSemiBold">app-example</ThemedText>.
-        </ThemedText>
-      </ThemedView>
-    </ParallaxScrollView>
+    <View>
+      <View className="bg-white ">
+        <SafeAreaView className="w-11/12 mx-auto gap-8 pt-8">
+          <View className="items-center gap-2">
+            <Text>Current CGPA</Text>
+            <Text className="text-6xl font-semibold">4.00</Text>
+          </View>
+          <View className="flex-row gap-4">
+            <DetailsCard title="Credits" value="96" />
+            <DetailsCard title="Courses" value="32" />
+            <DetailsCard title="Term" value="8th" />
+          </View>
+
+          <View className="flex-row gap-2">
+            <ScrollView
+              horizontal
+              showsHorizontalScrollIndicator={false}
+              contentContainerClassName="iflex-row items-center gap-3"
+            >
+              <Selector title="300L 2nd Semester" active />
+              <Selector title="300L 1st Semester" />
+            </ScrollView>
+            <Pressable hitSlop={8} className="rounded-lg bg-primary p-2">
+              <AntDesign name="plus" size={24} color="#fff" />
+            </Pressable>
+          </View>
+        </SafeAreaView>
+      </View>
+      <View className="w-11/12 mx-auto gap-4 pt-6">
+        <View className="flex-row justify-between mb-6">
+          <View>
+            <View className="flex-row items-center gap-2">
+              <Text className="text-lg">300L 2nd Semester</Text>
+            </View>
+            <View className="flex-row items-center">
+              <Text className="text-[#606067]">Current CGPA: 3.84</Text>
+            </View>
+          </View>
+          <Pressable
+            hitSlop={8}
+            className="rounded-lg bg-primary py-2 px-4 flex-row items-center gap-2"
+          >
+            <AntDesign name="plus" size={20} color="#fff" />
+            <Text className="text-white">Add Course</Text>
+          </Pressable>
+        </View>
+        <ResultCard />
+        <ResultCard />
+      </View>
+    </View>
   );
 }
 
-const styles = StyleSheet.create({
-  titleContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 8,
-  },
-  stepContainer: {
-    gap: 8,
-    marginBottom: 8,
-  },
-  reactLogo: {
-    height: 178,
-    width: 290,
-    bottom: 0,
-    left: 0,
-    position: 'absolute',
-  },
-});
+const ResultCard = () => (
+  <View className="bg-white rounded-lg p-4 flex-row justify-between border border-[#c5c5c5]">
+    <View>
+      <View className="flex-row items-center gap-2">
+        <Text className="text-lg">Software Engineering</Text>
+      </View>
+      <View className="flex-row items-center">
+        <Text className="text-[#606067]">CSC 301</Text>
+        <Entypo name="dot-single" size={24} color="#606067" />
+        <Text className="text-[#606067]">3 Unit</Text>
+      </View>
+    </View>
+    <Text className="text-2xl top-1 font-medium">A</Text>
+  </View>
+);
+
+const Selector = ({ title, active }: { title: string; active?: boolean }) => (
+  <Pressable
+    className={cn(
+      "bg-primary/20 items-center justify-center rounded-lg px-5 py-3",
+      active && "bg-primary"
+    )}
+  >
+    <Text className="text-white">{title}</Text>
+  </Pressable>
+);
+
+const DetailsCard = ({ title, value }: { title: string; value: string }) => {
+  return (
+    <View className="flex-1 bg-[#f3f4f6] rounded-lg items-center gap-1 p-4">
+      <Text className="text-[#606067]">{title}</Text>
+      <Text className="font-semibold text-xl">{value}</Text>
+    </View>
+  );
+};

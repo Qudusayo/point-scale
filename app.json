@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "point-scale",
+    "name": "Point Scale",
     "slug": "point-scale",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -9,7 +9,8 @@
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.qudusayo.point-scale"
     },
     "android": {
       "adaptiveIcon": {

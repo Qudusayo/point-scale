@@ -1,6 +1,7 @@
-import { SafeAreaView, Text, TouchableOpacity, View } from "react-native";
+import { SafeAreaView, TouchableOpacity, View } from "react-native";
 import Feather from "@expo/vector-icons/Feather";
 import GradeCard from "@/components/grade-card";
+import Text from "@/components/text";
 
 const Settings = () => {
   return (
@@ -21,7 +22,7 @@ const Settings = () => {
 
         <View className="flex-row justify-center items-start bg-[#f3f4f6] gap-4 px-6 py-4 rounded-lg">
           <Feather name="info" size={20} color="black" className="top-1" />
-          <Text className="flex-1 text-base">
+          <Text className="flex-1 text-lg">
             Changes to grade settings will affect all future calculations.
             Historical grades will not be affected.
           </Text>

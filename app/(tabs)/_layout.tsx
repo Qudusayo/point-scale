@@ -35,13 +35,6 @@ export default function TabLayout() {
         // headerShown: false,
         tabBarButton: HapticTab,
         tabBarBackground: TabBarBackground,
-        tabBarStyle: Platform.select({
-          ios: {
-            // Use a transparent background on iOS to show the blur effect
-            position: "absolute",
-          },
-          default: {},
-        }),
         headerTitle: "",
         headerStyle: {
           shadowColor: "transparent",
@@ -60,7 +53,7 @@ export default function TabLayout() {
           headerShown: false,
         }}
       />
-      <Tabs.Screen
+      {/* <Tabs.Screen
         name="history"
         options={{
           title: "History",
@@ -69,7 +62,7 @@ export default function TabLayout() {
           ),
           headerLeft: () => <HeaderLeft text="History" />,
         }}
-      />
+      /> */}
       <Tabs.Screen
         name="settings"
         options={{

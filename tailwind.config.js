@@ -1,3 +1,5 @@
+import { platformSelect } from "nativewind/theme";
+
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   // NOTE: Update this to include the paths to all of your component files.
@@ -7,6 +9,14 @@ module.exports = {
     extend: {
       colors: {
         primary: "#5271FF"
+      },
+      fontFamily: {
+        winkySans: ["WinkySans", "sans-serif"],
+        system: platformSelect({
+          ios: "AtkinsonHyperlegible",
+          android: "AtkinsonHyperlegible",
+          default: "AtkinsonHyperlegible",
+        }),
       }
     },
   },

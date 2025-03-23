@@ -5,28 +5,52 @@ import { AntDesign } from "@expo/vector-icons";
 import { Picker } from "@react-native-picker/picker";
 import Text from "@/components/text";
 import TextInput from "@/components/text-input";
+import { cn } from "@/lib/utils";
+import { useCourseStore } from "@/store/courses-store";
+import { useLocalSearchParams } from "expo-router";
+import Toast from "react-native-toast-message";
 
 const AddCourse = () => {
   const [courseTitle, setCourseTitle] = useState("");
   const [courseCode, setCourseCode] = useState("");
-  const [courseUnit, setCourseUnit] = useState("3");
+  const [courseUnit, setCourseUnit] = useState("");
   const [courseScore, setCourseScore] = useState("");
   const [isPickerVisible, setIsPickerVisible] = useState(false);
-  const [tempCourseUnit, setTempCourseUnit] = useState("3");
-  const [isScorePickerVisible, setIsScorePickerVisible] = useState(false);
-  const [tempCourseScore, setTempCourseScore] = useState("");
+  const [tempCourseUnit, setTempCourseUnit] = useState("");
+  const params = useLocalSearchParams();
+  const addCourse = useCourseStore((store) => store.addCourse);
+
+  const semesterId = params["semester-id"] as string;
 
   const handleAddCourse = useCallback(() => {
-    console.log("Adding course:", {
-      courseTitle,
-      courseCode,
-      courseUnit,
-      courseScore,
+    // Validate input
+    if (!courseTitle || !courseCode || !courseUnit || !courseScore) {
+      alert("Please fill in all fields");
+      return;
+    }
+    if (isNaN(+courseScore)) {
+      alert("Score must be a number");
+      return;
+    }
+
+    addCourse({
+      course_code: courseCode,
+      course_title: courseTitle,
+      course_units: +courseUnit,
+      result: +courseScore,
+      session_id: semesterId,
     });
+
+    Toast.show({
+      type: "success",
+      text1: "Course Added",
+      text2: `${courseCode} has been added successfully`,
+    });
+
     // Reset form fields
     setCourseTitle("");
     setCourseCode("");
-    setCourseUnit("3");
+    setCourseUnit("");
     setCourseScore("");
   }, [courseTitle, courseCode, courseUnit, courseScore]);
 
@@ -68,8 +92,15 @@ const AddCourse = () => {
                   setIsPickerVisible(true);
                 }}
               >
-                <Text>
-                  {courseUnit} Unit{courseUnit !== "1" ? "s" : ""}
+                <Text
+                  className={cn(
+                    courseUnit ? "text-black" : "text-[#6060677f]",
+                    "font-system"
+                  )}
+                >
+                  {courseUnit
+                    ? `${courseUnit} Unit${courseUnit !== "1" ? "s" : ""}`
+                    : "Select Unit"}
                 </Text>
                 <AntDesign name="down" size={16} color="#606067" />
               </Pressable>
@@ -131,10 +162,6 @@ const AddCourse = () => {
             value={courseScore}
             onChangeText={setCourseScore}
             keyboardType="numeric"
-            onFocus={() => {
-              setTempCourseScore(courseScore);
-              setIsScorePickerVisible(true);
-            }}
           />
         </View>
 
@@ -147,6 +174,7 @@ const AddCourse = () => {
           </Text>
         </Pressable>
       </View>
+      <Toast />
     </SafeAreaView>
   );
 };

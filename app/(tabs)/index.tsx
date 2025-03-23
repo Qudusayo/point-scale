@@ -10,66 +10,56 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import AntDesign from "@expo/vector-icons/AntDesign";
 import { cn } from "@/lib/utils";
 import { useEffect, useState } from "react";
-import AddSemesterModal from "@/components/add-semester-modal";
 import Text from "@/components/text";
 import { Link } from "expo-router";
-import { _100L, _200L, _300L } from "@/constants/result";
 import ResultList from "@/components/result-list";
 import { calculateCGPA, CourseDetails } from "@/constants/utils";
+import SessionTabs from "@/components/session-tabs";
+import { useCourseStore } from "@/store/courses-store";
+import { useSemesterStore } from "@/store/semester-store";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default function HomeScreen() {
-  const [isModalVisible, setIsModalVisible] = useState(false);
+  const courses = useCourseStore((store) => store.courses);
+  const semesters = useSemesterStore((store) => store.semesters);
   const [totalCGPA, setTotalCGPA] = useState(0);
   const [activeSemesterId, setActiveSemesterId] = useState<string | null>(null);
-  const [semesters, setSemesters] = useState<
-    {
-      id: string;
-      level: string;
-      semester: string;
-      results: CourseDetails[];
-    }[]
-  >([]);
   const [totalWGPA, setTotalWGPA] = useState(0);
   const [totalUnits, setTotalUnits] = useState(0);
   const [unitsPassed, setUnitsPassed] = useState(0);
 
+  const calculateTotalCGPA = () => {
+    const cgpa = calculateCGPA(courses);
+    setTotalUnits(cgpa[0] || 0);
+    setUnitsPassed(cgpa[1] || 0);
+    setTotalWGPA(cgpa[2] || 0);
+    setTotalCGPA(cgpa[3] || 0);
+  };
+
+  const clearStorage = async () => {
+    try {
+      await AsyncStorage.clear();
+      console.log("AsyncStorage cleared!");
+    } catch (error) {
+      console.error("Error clearing AsyncStorage:", error);
+    }
+  };
+
   useEffect(() => {
-    const calculateTotalCGPA = () => {
-      const results = [..._100L, ..._200L, ..._300L].filter(
-        (item) => item.result !== "NA"
-      );
-      const cgpa = calculateCGPA(results);
-      setTotalUnits(cgpa[0] || 0);
-      setUnitsPassed(cgpa[1] || 0);
-      setTotalWGPA(cgpa[2] || 0);
-      setTotalCGPA(cgpa[3] || 0);
-    };
-
-    const semesterData = [
-      {
-        id: "1",
-        level: "300L",
-        semester: "Session",
-        results: _300L,
-      },
-      {
-        id: "2",
-        level: "200L",
-        semester: "Session",
-        results: _200L,
-      },
-      {
-        id: "3",
-        level: "100L",
-        semester: "Session",
-        results: _100L,
-      },
-    ];
-    setSemesters(semesterData);
-    setActiveSemesterId(semesterData[0].id);
-
+    // clearStorage();   // For testing purposes only
     calculateTotalCGPA();
+    setActiveSemesterId(semesters[0]?.id || null);
   }, []);
+
+  useEffect(() => {
+    if (!activeSemesterId) {
+      setActiveSemesterId(semesters[0]?.id || null);
+    }
+  }, [semesters]);
+
+  useEffect(() => {
+    calculateTotalCGPA();
+  }, [courses]);
 
   return (
     <View className="flex-1">
@@ -91,74 +81,30 @@ export default function HomeScreen() {
               <DetailsCard title="Total WGP" value={totalWGPA + ""} />
             </View>
 
-            <View className="flex-row gap-2">
-              <ScrollView
-                horizontal
-                showsHorizontalScrollIndicator={false}
-                contentContainerClassName="iflex-row items-center gap-3"
-              >
-                {semesters.map((semester) => (
-                  <Selector
-                    key={semester.id}
-                    onPress={() => {
-                      setActiveSemesterId(semester.id);
-                    }}
-                    title={`${semester.level} ${semester.semester}`}
-                    active={activeSemesterId === semester.id}
-                  />
-                ))}
-              </ScrollView>
-              <Link href="/add-semester" asChild>
-                <Pressable hitSlop={8} className="rounded-lg bg-primary p-2">
-                  <AntDesign name="plus" size={24} color="#fff" />
-                </Pressable>
-              </Link>
-            </View>
+            <SessionTabs
+              activeSemesterId={activeSemesterId}
+              setActiveSemesterId={setActiveSemesterId}
+            />
           </SafeAreaView>
         </View>
-        <View className="w-11/12 mx-auto gap-4 flex-1">
-          <ResultList
-            name={() => {
-              const semester = semesters.find(
-                (item) => item.id === activeSemesterId
-              );
-              return semester ? `${semester.level} ${semester.semester}` : "";
-            }}
-            results={[
-              ...(semesters.find((item) => item.id === activeSemesterId)
-                ?.results || []),
-            ].filter((item) => item.result !== "NA")}
-          />
-        </View>
+        {semesters.length ? (
+          <View className="w-11/12 mx-auto gap-4 flex-1">
+            <ResultList activeSemesterId={activeSemesterId} />
+          </View>
+        ) : (
+          <View className="flex-1 self-center justify-self-center mt-12">
+            <Text className="text-[#606067] text-xl text-center font-medium">
+              No semesters added yet
+            </Text>
+            <Text className="text-[#606067] text-sm text-center">
+              Tap the + button above to add a semester
+            </Text>
+          </View>
+        )}
       </View>
-      <AddSemesterModal
-        visible={isModalVisible}
-        onClose={() => setIsModalVisible(false)}
-        onAdd={(level, semester) => {
-          console.log("Adding:", level, semester);
-          setIsModalVisible(false);
-        }}
-      />
     </View>
   );
 }
-
-interface SelectorProps extends PressableProps {
-  title: string;
-  active?: boolean;
-}
-
-const Selector = ({ title, active, ...props }: SelectorProps) => (
-  <Pressable
-    className={cn(
-      "bg-primary/20 items-center justify-center rounded-lg px-5 py-3 ",
-      active && "bg-primary"
-    )}
-    {...props}
-  >
-    <Text className="text-white font-system">{title}</Text>
-  </Pressable>
-);
 
 const DetailsCard = ({ title, value }: { title: string; value: string }) => {
   return (

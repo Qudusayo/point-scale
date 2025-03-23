@@ -1,3 +1,5 @@
+import { CourseType } from "@/store/courses-store";
+
 export const getGrade = (score: number) => {
   if (score <= 100 && score >= 70) {
     return "A";
@@ -35,17 +37,17 @@ export interface CourseDetails {
   result: string;
 }
 
-export function calculateCGPA(results: CourseDetails[]): number[] {
+export function calculateCGPA(results: CourseType[]): number[] {
   let totalUnits = 0;
   let totalUnitPassed = 0;
 
   const totalGradePoint = results.reduce((result, course) => {
-    const courseUnitPoint = parseInt(course.course_units);
+    const courseUnitPoint = course.course_units;
 
     totalUnits += courseUnitPoint;
-    totalUnitPassed += parseInt(course.result) >= 45 ? courseUnitPoint : 0;
+    totalUnitPassed += course.result >= 45 ? courseUnitPoint : 0;
 
-    const coursePoint = gradePoint(parseInt(course.result));
+    const coursePoint = gradePoint(course.result);
 
     const courseGradePoint = courseUnitPoint * coursePoint;
     return result + courseGradePoint;

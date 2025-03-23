@@ -1,34 +1,29 @@
-import { Modal, Platform, Pressable, StyleSheet, View } from "react-native";
-import React, { useCallback, useState } from "react";
+import { Pressable, StyleSheet, View } from "react-native";
+import React, { useCallback, useEffect, useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { AntDesign } from "@expo/vector-icons";
-import { Picker } from "@react-native-picker/picker";
 import Text from "@/components/text";
 import TextInput from "@/components/text-input";
+import { useSemesterStore } from "@/store/semester-store";
 
-const AddCourse = () => {
-  const [courseTitle, setCourseTitle] = useState("");
-  const [courseCode, setCourseCode] = useState("");
-  const [courseUnit, setCourseUnit] = useState("3");
-  const [courseScore, setCourseScore] = useState("");
-  const [isPickerVisible, setIsPickerVisible] = useState(false);
-  const [tempCourseUnit, setTempCourseUnit] = useState("3");
-  const [isScorePickerVisible, setIsScorePickerVisible] = useState(false);
-  const [tempCourseScore, setTempCourseScore] = useState("");
+const AddSemester = () => {
+  const [session, setSession] = useState("");
+  const [semester, setSemester] = useState("");
+  const addSemesters = useSemesterStore((store) => store.addSemester);
 
-  const handleAddCourse = useCallback(() => {
-    console.log("Adding course:", {
-      courseTitle,
-      courseCode,
-      courseUnit,
-      courseScore,
-    });
+  const handleAddSemester = useCallback(() => {
+    // Validate input
+    if (!session || !semester) {
+      alert("Please fill in all fields");
+      return;
+    }
+
+    // Add semester to store
+    addSemesters({ session, semester });
+
     // Reset form fields
-    setCourseTitle("");
-    setCourseCode("");
-    setCourseUnit("3");
-    setCourseScore("");
-  }, [courseTitle, courseCode, courseUnit, courseScore]);
+    setSession("");
+    setSemester("");
+  }, [session, semester]);
 
   return (
     <SafeAreaView className="flex-1">
@@ -42,8 +37,8 @@ const AddCourse = () => {
           <TextInput
             className="border border-gray-300 rounded-lg p-2"
             placeholder="e.g. 300L"
-            value={courseTitle}
-            onChangeText={setCourseTitle}
+            value={session}
+            onChangeText={setSession}
           />
         </View>
 
@@ -52,14 +47,14 @@ const AddCourse = () => {
           <TextInput
             className="border border-gray-300 rounded-lg p-2 font-system"
             placeholder="e.g. 2nd Semester"
-            value={courseCode}
-            onChangeText={setCourseCode}
+            value={semester}
+            onChangeText={setSemester}
           />
         </View>
 
         <Pressable
           className="bg-primary py-3 rounded-lg mt-4"
-          onPress={handleAddCourse}
+          onPress={handleAddSemester}
         >
           <Text className="text-white text-center font-semibold text-xl">
             Add Semester
@@ -70,6 +65,6 @@ const AddCourse = () => {
   );
 };
 
-export default AddCourse;
+export default AddSemester;
 
 const styles = StyleSheet.create({});

@@ -9,6 +9,14 @@ import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import ReanimatedSwipeable, {
   SwipeableMethods,
 } from 'react-native-gesture-handler/ReanimatedSwipeable';
+import {
+  HexagonLetterA,
+  HexagonLetterB,
+  HexagonLetterC,
+  HexagonLetterD,
+  HexagonLetterE,
+  HexagonLetterF,
+} from './icons';
 import Text from './text';
 
 function RightAction({ onPress }: React.ComponentProps<typeof Pressable>) {
@@ -21,6 +29,25 @@ function RightAction({ onPress }: React.ComponentProps<typeof Pressable>) {
     </Pressable>
   );
 }
+
+const getGradeIcon = (grade: string) => {
+  switch (grade) {
+    case 'A':
+      return <HexagonLetterA width={32} height={32} fill="#00C853" />;
+    case 'B':
+      return <HexagonLetterB width={32} height={32} fill="#2196F3" />;
+    case 'C':
+      return <HexagonLetterC width={32} height={32} fill="#FFC107" />;
+    case 'D':
+      return <HexagonLetterD width={32} height={32} fill="#FF9800" />;
+    case 'E':
+      return <HexagonLetterE width={32} height={32} fill="#FF5722" />;
+    case 'F':
+      return <HexagonLetterF width={32} height={32} fill="#D50000" />;
+    default:
+      return <Text className="top-1 text-2xl font-medium">{grade}</Text>;
+  }
+};
 
 export default function ResultCard({ item }: { item: CourseType }) {
   const swipeableRef = useRef<SwipeableMethods | null>(null);
@@ -82,7 +109,7 @@ export default function ResultCard({ item }: { item: CourseType }) {
               </Text>
             </View>
           </View>
-          <Text className="top-1 text-2xl font-medium">{getGrade(result || 0)}</Text>
+          {getGradeIcon(getGrade(result || 0))}
         </View>
       </ReanimatedSwipeable>
     </GestureHandlerRootView>

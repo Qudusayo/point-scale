@@ -9,6 +9,7 @@ import { cn } from "@/lib/utils";
 import { useCourseStore } from "@/store/courses-store";
 import { useLocalSearchParams } from "expo-router";
 import Toast from "react-native-toast-message";
+import { toast } from "@/lib/toast";
 
 const AddCourse = () => {
   const [courseTitle, setCourseTitle] = useState("");
@@ -41,11 +42,10 @@ const AddCourse = () => {
       session_id: semesterId,
     });
 
-    Toast.show({
-      type: "success",
-      text1: "Course Added",
-      text2: `${courseCode} has been added successfully`,
-    });
+    toast(
+      "New Course Added",
+      `${courseCode} has been added successfully`
+    );
 
     // Reset form fields
     setCourseTitle("");

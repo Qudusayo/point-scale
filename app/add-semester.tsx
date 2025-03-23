@@ -1,9 +1,11 @@
 import { Pressable, StyleSheet, View } from "react-native";
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import Text from "@/components/text";
 import TextInput from "@/components/text-input";
 import { useSemesterStore } from "@/store/semester-store";
+import Toast from "react-native-toast-message";
+import { toast } from "@/lib/toast";
 
 const AddSemester = () => {
   const [session, setSession] = useState("");
@@ -19,6 +21,11 @@ const AddSemester = () => {
 
     // Add semester to store
     addSemesters({ session, semester });
+
+    toast(
+      "New Semester Added",
+      `${session} ${semester} has been added successfully`
+    );
 
     // Reset form fields
     setSession("");
@@ -61,6 +68,7 @@ const AddSemester = () => {
           </Text>
         </Pressable>
       </View>
+      <Toast />
     </SafeAreaView>
   );
 };

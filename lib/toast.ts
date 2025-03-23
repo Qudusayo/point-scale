@@ -8,7 +8,6 @@ export const toast = (
   return Toast.show({
     type: type || "success",
     swipeable: true,
-    visibilityTime: 1500,
     text1: title,
     text1Style: { fontFamily: "AtkinsonHyperlegible" },
     text2: msg,

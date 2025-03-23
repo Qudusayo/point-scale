@@ -42,10 +42,7 @@ const AddCourse = () => {
       session_id: semesterId,
     });
 
-    toast(
-      "New Course Added",
-      `${courseCode} has been added successfully`
-    );
+    toast("New Course Added", `${courseCode} has been added successfully`);
 
     // Reset form fields
     setCourseTitle("");

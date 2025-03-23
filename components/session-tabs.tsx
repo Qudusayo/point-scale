@@ -33,11 +33,7 @@ const SessionTabs = ({
   setActiveSemesterId,
 }: SessionTabsProps) => {
   const semesters = useSemesterStore((store) => store.semesters);
-
-  useEffect(() => {
-    console.log({ semesters });
-  }, [semesters]);
-
+  
   return (
     <View className="flex-row gap-2">
       {semesters.length ? (

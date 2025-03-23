@@ -1,11 +1,8 @@
-import { View, LayoutAnimation, Alert } from "react-native";
+import { View, Pressable, LayoutAnimation, Alert } from "react-native";
 import Text from "./text";
 import Feather from "@expo/vector-icons/Feather";
 import React, { LegacyRef, useRef, useState } from "react";
-import {
-  GestureHandlerRootView,
-  Pressable,
-} from "react-native-gesture-handler";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
 import ReanimatedSwipeable, {
   SwipeableMethods,
 } from "react-native-gesture-handler/ReanimatedSwipeable";
@@ -17,21 +14,7 @@ import { cn } from "@/lib/utils";
 function RightAction({ onPress }: React.ComponentProps<typeof Pressable>) {
   return (
     <Pressable
-      // className="rounded-lg justify-center bg-[#DC3545] items-center block w-1/6"
-      style={{
-        backgroundColor: "#DC3545",
-        padding: 10,
-        borderRadius: 8,
-        borderTopLeftRadius: "0",
-        borderBottomLeftRadius: "0",
-        alignItems: "center",
-        justifyContent: "center",
-        width: "20%",
-        height: "100%",
-        borderWidth: 1,
-        borderColor: "#c5c5c5",
-        borderLeftWidth: 0,
-      }}
+      className="rounded-lg justify-center rounded-l-none bg-[#DC3545] items-center block w-1/5 h-full"
       onPress={onPress}
     >
       <Feather name="trash-2" size={24} color="#fff" />

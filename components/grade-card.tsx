@@ -1,24 +1,20 @@
-import { View } from "react-native";
-import FontAwesome6 from "@expo/vector-icons/FontAwesome6";
-import Text from "./text";
+import FontAwesome6 from '@expo/vector-icons/FontAwesome6';
+import { View } from 'react-native';
+import Text from './text';
 
 const GradeCard = () => {
   return (
-    <View className="bg-white border border-[#c5c5c5] rounded-lg p-4 gap-4">
-      <View className="flex-row justify-between items-center">
-        <Text className="font-semibold text-xl">Grade A+</Text>
+    <View className="gap-4 rounded-lg border border-[#c5c5c5] bg-white p-4">
+      <View className="flex-row items-center justify-between">
+        <Text className="text-xl font-semibold">Grade A+</Text>
         <FontAwesome6 name="pencil" size={20} color="#606067" />
       </View>
-      <View className="flex-row justify-between items-center">
-        <Text className="text-md font-medium text-[#606067] text-lg">
-          Grade Point
-        </Text>
+      <View className="flex-row items-center justify-between">
+        <Text className="text-md text-lg font-medium text-[#606067]">Grade Point</Text>
         <Text className="text-lg">4.0</Text>
       </View>
-      <View className="flex-row justify-between items-center">
-        <Text className="text-md font-medium text-[#606067] text-lg">
-          Score Range
-        </Text>
+      <View className="flex-row items-center justify-between">
+        <Text className="text-md text-lg font-medium text-[#606067]">Score Range</Text>
         <Text className="text-lg">90 - 100</Text>
       </View>
     </View>

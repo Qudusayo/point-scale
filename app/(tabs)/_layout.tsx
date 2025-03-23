@@ -1,26 +1,17 @@
-import { Tabs } from "expo-router";
-import React from "react";
-import { Image, Platform, Text, View } from "react-native";
+import { Tabs } from 'expo-router';
+import React from 'react';
+import { View } from 'react-native';
 
-import { HapticTab } from "@/components/HapticTab";
-import { Colors } from "@/constants/Colors";
-import { useColorScheme } from "@/hooks/useColorScheme";
+import { HapticTab } from '@/components/HapticTab';
+import { Colors } from '@/constants/Colors';
+import { useColorScheme } from '@/hooks/useColorScheme';
 
-import Feather from "@expo/vector-icons/Feather";
-import Octicons from "@expo/vector-icons/Octicons";
-import AntDesign from "@expo/vector-icons/AntDesign";
+import { Home, Settings } from '@/components/icons';
+import Text from '@/components/text';
 
 const HeaderLeft = ({ text }: { text: string }) => (
   <View className="flex-row items-center gap-4 px-4">
-    <Text
-      style={{
-        fontSize: 22,
-        fontWeight: "600",
-        color: Colors["light"].tint,
-      }}
-    >
-      {text}
-    </Text>
+    <Text className="text-2xl font-bold text-[#5271FF]">{text}</Text>
   </View>
 );
 
@@ -30,12 +21,12 @@ export default function TabLayout() {
   return (
     <Tabs
       screenOptions={{
-        tabBarActiveTintColor: Colors[colorScheme ?? "light"].tint,
+        tabBarActiveTintColor: Colors[colorScheme ?? 'light'].tint,
         // headerShown: false,
         tabBarButton: HapticTab,
-        headerTitle: "",
+        headerTitle: '',
         headerStyle: {
-          shadowColor: "transparent",
+          shadowColor: 'transparent',
           // borderBottomColor: "#f0f0f0",
           // borderBottomWidth: 1,
         },
@@ -44,10 +35,8 @@ export default function TabLayout() {
       <Tabs.Screen
         name="index"
         options={{
-          title: "Home",
-          tabBarIcon: ({ color, size }) => (
-            <AntDesign name="home" size={size} color={color} />
-          ),
+          title: 'Home',
+          tabBarIcon: ({ color, size }) => <Home stroke={color} />,
           headerShown: false,
         }}
       />
@@ -64,11 +53,9 @@ export default function TabLayout() {
       <Tabs.Screen
         name="settings"
         options={{
-          title: "Settings",
-          tabBarIcon: ({ color, size }) => (
-            <Feather name="settings" size={size} color={color} />
-          ),
-          headerLeft: () => <HeaderLeft text="Grade Settings" />,
+          title: 'Settings',
+          tabBarIcon: ({ color, size }) => <Settings stroke={color} />,
+          headerLeft: () => <HeaderLeft text="Settings" />,
         }}
       />
     </Tabs>

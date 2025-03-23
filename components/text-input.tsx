@@ -1,6 +1,6 @@
-import { TextInput as ExpoTextInput, Platform } from "react-native";
-import React from "react";
-import { cn } from "@/lib/utils";
+import { cn } from '@/lib/utils';
+import React from 'react';
+import { TextInput as ExpoTextInput, Platform } from 'react-native';
 
 const TextInput = (props: React.ComponentProps<typeof ExpoTextInput>) => {
   return (
@@ -19,7 +19,7 @@ const TextInput = (props: React.ComponentProps<typeof ExpoTextInput>) => {
           paddingHorizontal: 12,
         },
       ]}
-      className={cn(props.className, "font-system")}
+      className={cn(props.className, 'font-system')}
     ></ExpoTextInput>
   );
 };

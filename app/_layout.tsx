@@ -1,17 +1,13 @@
-import {
-  DarkTheme,
-  DefaultTheme,
-  ThemeProvider,
-} from "@react-navigation/native";
-import { useFonts } from "expo-font";
-import { Stack } from "expo-router";
-import * as SplashScreen from "expo-splash-screen";
-import { StatusBar } from "expo-status-bar";
-import { useEffect } from "react";
-import "react-native-reanimated";
-import "../global.css";
+import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native';
+import { useFonts } from 'expo-font';
+import { Stack } from 'expo-router';
+import * as SplashScreen from 'expo-splash-screen';
+import { StatusBar } from 'expo-status-bar';
+import { useEffect } from 'react';
+import 'react-native-reanimated';
+import '../global.css';
 
-import { useColorScheme } from "@/hooks/useColorScheme";
+import { useColorScheme } from '@/hooks/useColorScheme';
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
@@ -19,8 +15,8 @@ SplashScreen.preventAutoHideAsync();
 export default function RootLayout() {
   const colorScheme = useColorScheme();
   const [loaded] = useFonts({
-    WinkySans: require("../assets/fonts/WinkySans.ttf"),
-    AtkinsonHyperlegible: require("../assets/fonts/AtkinsonHyperlegible.ttf"),
+    WinkySans: require('../assets/fonts/WinkySans.ttf'),
+    AtkinsonHyperlegible: require('../assets/fonts/AtkinsonHyperlegible.ttf'),
   });
 
   useEffect(() => {
@@ -34,24 +30,24 @@ export default function RootLayout() {
   }
 
   return (
-    <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
+    <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
       <Stack>
         <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
         <Stack.Screen name="+not-found" />
         <Stack.Screen
           name="add-course/[semester-id]"
           options={{
-            presentation: "modal",
+            presentation: 'modal',
             headerShown: false,
-            animation: "slide_from_bottom",
+            animation: 'slide_from_bottom',
           }}
         />
         <Stack.Screen
           name="add-semester"
           options={{
-            presentation: "modal",
+            presentation: 'modal',
             headerShown: false,
-            animation: "slide_from_bottom",
+            animation: 'slide_from_bottom',
           }}
         />
       </Stack>

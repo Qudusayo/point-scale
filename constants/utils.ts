@@ -1,16 +1,16 @@
-import { CourseType } from "@/store/courses-store";
+import { CourseType } from '@/store/courses-store';
 
 export const getGrade = (score: number) => {
   if (score <= 100 && score >= 70) {
-    return "A";
+    return 'A';
   } else if (score <= 69 && score >= 60) {
-    return "B";
+    return 'B';
   } else if (score <= 59 && score >= 50) {
-    return "C";
+    return 'C';
   } else if (score <= 49 && score >= 45) {
-    return "D";
+    return 'D';
   } else {
-    return "F";
+    return 'F';
   }
 };
 

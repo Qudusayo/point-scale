@@ -1,8 +1,8 @@
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import { create } from "zustand";
-import { nanoid } from "nanoid";
-import { persist, createJSONStorage } from "zustand/middleware";
-import { LayoutAnimation } from "react-native";
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { nanoid } from 'nanoid';
+import { LayoutAnimation } from 'react-native';
+import { create } from 'zustand';
+import { createJSONStorage, persist } from 'zustand/middleware';
 
 export type CourseType = {
   id: string;
@@ -15,7 +15,7 @@ export type CourseType = {
 
 type CoursesState = {
   courses: CourseType[];
-  addCourse: (data: Omit<CourseType, "id">) => Promise<void>;
+  addCourse: (data: Omit<CourseType, 'id'>) => Promise<void>;
   removeCourse: (id: string) => void;
 };
 
@@ -23,7 +23,7 @@ export const useCourseStore = create(
   persist<CoursesState>(
     (set) => ({
       courses: [],
-      addCourse: async (data: Omit<CourseType, "id">) => {
+      addCourse: async (data: Omit<CourseType, 'id'>) => {
         set((state) => {
           return {
             ...state,
@@ -48,8 +48,8 @@ export const useCourseStore = create(
       },
     }),
     {
-      name: "point-scale-courses-store",
+      name: 'point-scale-courses-store',
       storage: createJSONStorage(() => AsyncStorage),
-    }
-  )
+    },
+  ),
 );

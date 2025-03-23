@@ -1,30 +1,22 @@
-import { View, Text, FlatList, Pressable, Alert } from "react-native";
-import React, { useEffect, useState } from "react";
-import { Link } from "expo-router";
-import { AntDesign } from "@expo/vector-icons";
-import ResultCard from "./result-card";
-import { calculateCGPA, CourseDetails } from "@/constants/utils";
-import { CourseType, useCourseStore } from "@/store/courses-store";
-import { useSemesterStore } from "@/store/semester-store";
+import { calculateCGPA } from '@/constants/utils';
+import { useCourseStore } from '@/store/courses-store';
+import { useSemesterStore } from '@/store/semester-store';
+import { AntDesign } from '@expo/vector-icons';
+import { Link } from 'expo-router';
+import React, { useEffect, useState } from 'react';
+import { FlatList, Pressable, Text, View } from 'react-native';
+import ResultCard from './result-card';
 
-const ResultList = ({
-  activeSemesterId,
-}: {
-  activeSemesterId: string | null;
-}) => {
+const ResultList = ({ activeSemesterId }: { activeSemesterId: string | null }) => {
   const [cgpa, setCgpa] = useState(0);
   const courses = useCourseStore((store) => store.courses);
-  const results = courses.filter(
-    (course) => course.session_id === activeSemesterId
-  );
+  const results = courses.filter((course) => course.session_id === activeSemesterId);
   const semester = useSemesterStore((store) => store.semesters);
-  const semesterDetails = semester.find(
-    (semester) => semester.id === activeSemesterId
-  );
+  const semesterDetails = semester.find((semester) => semester.id === activeSemesterId);
 
   const semesterName = semesterDetails
     ? `${semesterDetails.session} ${semesterDetails.semester}`
-    : "";
+    : '';
 
   useEffect(() => {
     const result = calculateCGPA(results);
@@ -45,13 +37,13 @@ const ResultList = ({
               <Text className="text-[#606067]">Current CGPA: {cgpa}</Text>
             </View>
           </View>
-          <Link href={"/add-course/" + activeSemesterId} asChild>
+          <Link href={'/add-course/' + activeSemesterId} asChild>
             <Pressable
               hitSlop={8}
-              className="rounded-lg bg-primary py-2 px-4 flex-row items-center gap-2"
+              className="flex-row items-center gap-2 rounded-lg bg-primary px-4 py-2"
             >
               <AntDesign name="plus" size={16} color="#fff" />
-              <Text className="text-white font-system">Add Course</Text>
+              <Text className="font-system text-white">Add Course</Text>
             </Pressable>
           </Link>
         </View>
@@ -62,11 +54,11 @@ const ResultList = ({
       className="flex-1"
       contentContainerClassName="gap-4 pb-8"
       ListEmptyComponent={
-        <View className="flex-1 self-center justify-self-center mt-12">
-          <Text className="text-[#606067] text-xl text-center font-medium">
+        <View className="mt-12 flex-1 self-center justify-self-center">
+          <Text className="text-center text-xl font-medium text-[#606067]">
             No courses added yet
           </Text>
-          <Text className="text-[#606067] text-sm text-center">
+          <Text className="text-center text-sm text-[#606067]">
             Tap the button above to add a course
           </Text>
         </View>

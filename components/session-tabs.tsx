@@ -1,10 +1,10 @@
-import React, { useEffect } from "react";
-import { Pressable, PressableProps, ScrollView, View } from "react-native";
-import Text from "./text";
-import { Link } from "expo-router";
-import { AntDesign } from "@expo/vector-icons";
-import { cn } from "@/lib/utils";
-import { useSemesterStore } from "@/store/semester-store";
+import { cn } from '@/lib/utils';
+import { useSemesterStore } from '@/store/semester-store';
+import { AntDesign } from '@expo/vector-icons';
+import { Link } from 'expo-router';
+import React from 'react';
+import { Pressable, PressableProps, ScrollView, View } from 'react-native';
+import Text from './text';
 
 interface SelectorProps extends PressableProps {
   title: string;
@@ -19,21 +19,18 @@ interface SessionTabsProps {
 const Selector = ({ title, active, ...props }: SelectorProps) => (
   <Pressable
     className={cn(
-      "bg-primary/20 items-center justify-center rounded-lg px-5 py-3 ",
-      active && "bg-primary"
+      'items-center justify-center rounded-lg bg-primary/20 px-5 py-3',
+      active && 'bg-primary',
     )}
     {...props}
   >
-    <Text className="text-white font-system">{title}</Text>
+    <Text className="font-system text-white">{title}</Text>
   </Pressable>
 );
 
-const SessionTabs = ({
-  activeSemesterId,
-  setActiveSemesterId,
-}: SessionTabsProps) => {
+const SessionTabs = ({ activeSemesterId, setActiveSemesterId }: SessionTabsProps) => {
   const semesters = useSemesterStore((store) => store.semesters);
-  
+
   return (
     <View className="flex-row gap-2">
       {semesters.length ? (

@@ -1,23 +1,13 @@
-import {
-  Pressable,
-  ScrollView,
-  View,
-  FlatList,
-  Alert,
-  PressableProps,
-} from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
-import AntDesign from "@expo/vector-icons/AntDesign";
-import { cn } from "@/lib/utils";
-import { useEffect, useState } from "react";
-import Text from "@/components/text";
-import { Link } from "expo-router";
-import ResultList from "@/components/result-list";
-import { calculateCGPA, CourseDetails } from "@/constants/utils";
-import SessionTabs from "@/components/session-tabs";
-import { useCourseStore } from "@/store/courses-store";
-import { useSemesterStore } from "@/store/semester-store";
-import AsyncStorage from "@react-native-async-storage/async-storage";
+import ResultList from '@/components/result-list';
+import SessionTabs from '@/components/session-tabs';
+import Text from '@/components/text';
+import { calculateCGPA } from '@/constants/utils';
+import { useCourseStore } from '@/store/courses-store';
+import { useSemesterStore } from '@/store/semester-store';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useEffect, useState } from 'react';
+import { View } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 export default function HomeScreen() {
   const courses = useCourseStore((store) => store.courses);
@@ -39,9 +29,9 @@ export default function HomeScreen() {
   const clearStorage = async () => {
     try {
       await AsyncStorage.clear();
-      console.log("AsyncStorage cleared!");
+      console.log('AsyncStorage cleared!');
     } catch (error) {
-      console.error("Error clearing AsyncStorage:", error);
+      console.error('Error clearing AsyncStorage:', error);
     }
   };
 
@@ -65,20 +55,17 @@ export default function HomeScreen() {
     <View className="flex-1">
       <View className="flex-1">
         <View className="bg-white">
-          <SafeAreaView
-            className="w-11/12 mx-auto py-8 gap-8"
-            edges={["top", "left", "right"]}
-          >
+          <SafeAreaView className="mx-auto w-11/12 gap-8 py-8" edges={['top', 'left', 'right']}>
             <View className="items-center gap-2">
               <Text>Current CGPA</Text>
-              <Text className="text-7xl font-semibold font-system text-primary">
+              <Text className="font-system text-7xl font-semibold text-primary">
                 {totalCGPA.toFixed(2)}
               </Text>
             </View>
             <View className="flex-row gap-4">
-              <DetailsCard title="Units Reg." value={totalUnits + ""} />
-              <DetailsCard title="Units Passed" value={unitsPassed + ""} />
-              <DetailsCard title="Total WGP" value={totalWGPA + ""} />
+              <DetailsCard title="Units Reg." value={totalUnits + ''} />
+              <DetailsCard title="Units Passed" value={unitsPassed + ''} />
+              <DetailsCard title="Total WGP" value={totalWGPA + ''} />
             </View>
 
             <SessionTabs
@@ -88,15 +75,15 @@ export default function HomeScreen() {
           </SafeAreaView>
         </View>
         {semesters.length ? (
-          <View className="w-11/12 mx-auto gap-4 flex-1">
+          <View className="mx-auto w-11/12 flex-1 gap-4">
             <ResultList activeSemesterId={activeSemesterId} />
           </View>
         ) : (
-          <View className="flex-1 self-center justify-self-center mt-12">
-            <Text className="text-[#606067] text-xl text-center font-medium">
+          <View className="mt-12 flex-1 self-center justify-self-center">
+            <Text className="text-center text-xl font-medium text-[#606067]">
               No semesters added yet
             </Text>
-            <Text className="text-[#606067] text-sm text-center">
+            <Text className="text-center text-sm text-[#606067]">
               Tap the + button above to add a semester
             </Text>
           </View>
@@ -108,11 +95,9 @@ export default function HomeScreen() {
 
 const DetailsCard = ({ title, value }: { title: string; value: string }) => {
   return (
-    <View className="flex-1 bg-[#f3f4f6] rounded-lg items-center gap-1 p-4">
-      <Text className="text-[#606067] font-system">{title}</Text>
-      <Text className="font-semibold text-2xl font-system text-primary">
-        {value}
-      </Text>
+    <View className="flex-1 items-center gap-1 rounded-lg bg-[#f3f4f6] p-4">
+      <Text className="font-system text-[#606067]">{title}</Text>
+      <Text className="font-system text-2xl font-semibold text-primary">{value}</Text>
     </View>
   );
 };

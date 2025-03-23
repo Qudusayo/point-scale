@@ -1,24 +1,24 @@
-import { platformSelect } from "nativewind/theme";
+import { platformSelect } from 'nativewind/theme';
 
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   // NOTE: Update this to include the paths to all of your component files.
-  content: ["./app/**/*.{js,jsx,ts,tsx}", "./components/**/*.{js,jsx,ts,tsx}"],
-  presets: [require("nativewind/preset")],
+  content: ['./app/**/*.{js,jsx,ts,tsx}', './components/**/*.{js,jsx,ts,tsx}'],
+  presets: [require('nativewind/preset')],
   theme: {
     extend: {
       colors: {
-        primary: "#5271FF"
+        primary: '#5271FF',
       },
       fontFamily: {
-        winkySans: ["WinkySans", "sans-serif"],
+        winkySans: ['WinkySans', 'sans-serif'],
         system: platformSelect({
-          ios: "AtkinsonHyperlegible",
-          android: "AtkinsonHyperlegible",
-          default: "AtkinsonHyperlegible",
+          ios: 'AtkinsonHyperlegible',
+          android: 'AtkinsonHyperlegible',
+          default: 'AtkinsonHyperlegible',
         }),
-      }
+      },
     },
   },
   plugins: [],
-}
+};

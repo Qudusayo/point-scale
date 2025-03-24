@@ -44,6 +44,21 @@ const HexagonLetterA = (props: React.ComponentProps<typeof Svg>) => (
   </Svg>
 );
 
+const HexagonLetterAPlus = (props: React.ComponentProps<typeof Svg>) => (
+  <Svg viewBox="0 0 24 24" fill="currentColor" {...props}>
+    <Path stroke="none" d="M0 0h24v24H0z" fill="none" />
+    <Path d="M13.666 1.429l6.75 3.98l.096 .063l.093 .078l.106 .074a3.22 3.22 0 0 1 1.284 2.39l.005 .204v7.284c0 1.175 -.643 2.256 -1.623 2.793l-6.804 4.302c-.98 .538 -2.166 .538 -3.2 -.032l-6.695 -4.237a3.23 3.23 0 0 1 -1.678 -2.826v-7.285c0 -1.106 .57 -2.128 1.476 -2.705l6.95 -4.098c1 -.552 2.214 -.552 3.24 .015m-1.666 5.571a3 3 0 0 0 -3 3v6a1 1 0 0 0 2 0v-2h2v2a1 1 0 0 0 .883 .993l.117 .007a1 1 0 0 0 1 -1v-6a3 3 0 0 0 -3 -3m0 2a1 1 0 0 1 1 1v2h-2v-2a1 1 0 0 1 .883 -.993z" />
+    <Path
+      d="M14.5 7.2 L19.5 7.2"
+      fill="none"
+      stroke="white"
+      strokeWidth={1.2}
+      strokeLinecap="round"
+    />
+    <Path d="M17 5 L17 9.5" fill="none" stroke="white" strokeWidth={1.2} strokeLinecap="round" />
+  </Svg>
+);
+
 const HexagonLetterB = (props: React.ComponentProps<typeof Svg>) => (
   <Svg width={24} height={24} viewBox="0 0 24 24" fill="currentColor" {...props}>
     <Path d="M0 0h24v24H0z" fill="none" />
@@ -79,13 +94,32 @@ const HexagonLetterF = (props: React.ComponentProps<typeof Svg>) => (
   </Svg>
 );
 
+const Pencil = (props: React.ComponentProps<typeof Svg>) => (
+  <Svg
+    width={24}
+    height={24}
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth={2}
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    {...props}
+  >
+    <Path d="M0 0h24v24H0z" stroke="none" />
+    <Path d="M4 20h4L18.5 9.5a2.828 2.828 0 1 0-4-4L4 16zm9.5-13.5 4 4" />
+  </Svg>
+);
+
 export {
   HexagonLetterA,
+  HexagonLetterAPlus,
   HexagonLetterB,
   HexagonLetterC,
   HexagonLetterD,
   HexagonLetterE,
   HexagonLetterF,
   Home,
+  Pencil,
   Settings,
 };

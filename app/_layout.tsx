@@ -9,6 +9,9 @@ import '../global.css';
 
 import { useColorScheme } from '@/hooks/useColorScheme';
 
+import { BottomSheetProvider } from '@/context/bottom-sheet-context';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
+
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
 
@@ -30,28 +33,32 @@ export default function RootLayout() {
   }
 
   return (
-    <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-      <Stack>
-        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-        <Stack.Screen name="+not-found" />
-        <Stack.Screen
-          name="add-course/[semester-id]"
-          options={{
-            presentation: 'modal',
-            headerShown: false,
-            animation: 'slide_from_bottom',
-          }}
-        />
-        <Stack.Screen
-          name="add-semester"
-          options={{
-            presentation: 'modal',
-            headerShown: false,
-            animation: 'slide_from_bottom',
-          }}
-        />
-      </Stack>
-      <StatusBar style="auto" />
-    </ThemeProvider>
+    <BottomSheetProvider>
+      <GestureHandlerRootView className="flex-2">
+        <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
+          <Stack>
+            <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+            <Stack.Screen name="+not-found" />
+            <Stack.Screen
+              name="add-course/[semester-id]"
+              options={{
+                presentation: 'modal',
+                headerShown: false,
+                animation: 'slide_from_bottom',
+              }}
+            />
+            <Stack.Screen
+              name="add-semester"
+              options={{
+                presentation: 'modal',
+                headerShown: false,
+                animation: 'slide_from_bottom',
+              }}
+            />
+          </Stack>
+          <StatusBar style="auto" />
+        </ThemeProvider>
+      </GestureHandlerRootView>
+    </BottomSheetProvider>
   );
 }

@@ -41,9 +41,12 @@ export default function ResultCard({ item }: { item: CourseType }) {
   const [swipedToLeft, setSwipedToLeft] = useState(false);
   const [swipedToRight, setSwipedToRight] = useState(false);
   const removeCourse = useCourseStore((store) => store.removeCourse);
+  const { bottomSheetRef, setActiveResultId } = useBottomSheetContext();
 
-  const { bottomSheetRef } = useBottomSheetContext();
-  const openBottomSheet = () => bottomSheetRef.current?.snapToIndex(1);
+  const openBottomSheet = () => {
+    setActiveResultId(item.id);
+    bottomSheetRef.current?.snapToIndex(1);
+  };
 
   const handleDelete = () => {
     Alert.alert(`Are you sure you want to delete ${course_code}?`, 'It will be gone for good', [

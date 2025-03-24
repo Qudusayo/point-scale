@@ -1,15 +1,12 @@
+import { HapticTab } from '@/components/HapticTab';
+import { Home, Settings } from '@/components/icons';
+import ResultBottomSheetDisplay from '@/components/result-bottom-sheet-display';
+import Text from '@/components/text';
+import { Colors } from '@/constants/Colors';
+import { useColorScheme } from '@/hooks/useColorScheme';
 import { Tabs } from 'expo-router';
 import React from 'react';
 import { View } from 'react-native';
-
-import { HapticTab } from '@/components/HapticTab';
-import { Colors } from '@/constants/Colors';
-import { useColorScheme } from '@/hooks/useColorScheme';
-
-import { Home, Settings } from '@/components/icons';
-import Text from '@/components/text';
-import { useBottomSheetContext } from '@/context/bottom-sheet-context';
-import BottomSheet, { BottomSheetBackdrop, BottomSheetView } from '@gorhom/bottom-sheet';
 
 const HeaderLeft = ({ text }: { text: string }) => (
   <View className="flex-row items-center gap-4 px-4">
@@ -19,7 +16,6 @@ const HeaderLeft = ({ text }: { text: string }) => (
 
 export default function TabLayout() {
   const colorScheme = useColorScheme();
-  const { bottomSheetRef, handleSheetChanges } = useBottomSheetContext();
 
   return (
     <>
@@ -63,18 +59,7 @@ export default function TabLayout() {
           }}
         />
       </Tabs>
-      <BottomSheet
-        ref={bottomSheetRef}
-        onChange={handleSheetChanges}
-        snapPoints={[400]}
-        index={-1}
-        enablePanDownToClose
-        backdropComponent={(props) => <BottomSheetBackdrop {...props} />}
-      >
-        <BottomSheetView className="p-9">
-          <Text>Awesome 🎉</Text>
-        </BottomSheetView>
-      </BottomSheet>
+      <ResultBottomSheetDisplay />
     </>
   );
 }

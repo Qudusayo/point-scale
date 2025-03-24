@@ -16,12 +16,13 @@ export type CourseType = {
 type CoursesState = {
   courses: CourseType[];
   addCourse: (data: Omit<CourseType, 'id'>) => Promise<void>;
+  getResultById: (id?: string) => CourseType | undefined;
   removeCourse: (id: string) => void;
 };
 
 export const useCourseStore = create(
   persist<CoursesState>(
-    (set) => ({
+    (set, get) => ({
       courses: [],
       addCourse: async (data: Omit<CourseType, 'id'>) => {
         set((state) => {
@@ -45,6 +46,11 @@ export const useCourseStore = create(
             courses: state.courses.filter((course) => course.id !== course_id),
           };
         });
+      },
+      getResultById: (id?: string) => {
+        const { courses } = get();
+        const course = courses.find((course) => course.id === id);
+        return course;
       },
     }),
     {

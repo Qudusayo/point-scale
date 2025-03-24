@@ -1,10 +1,11 @@
 // Create a context for the BottomSheet
 import BottomSheet from '@gorhom/bottom-sheet';
-import React, { createContext, useCallback, useRef } from 'react';
+import React, { createContext, useCallback, useRef, useState } from 'react';
 
 interface BottomSheetContextType {
+  activeResultId: string | undefined;
+  setActiveResultId: React.Dispatch<React.SetStateAction<string | undefined>>;
   bottomSheetRef: React.RefObject<BottomSheet>;
-  handleSheetChanges: (index: number) => void;
   open: () => void;
   close: () => void;
 }
@@ -13,6 +14,7 @@ const BottomSheetContext = createContext<BottomSheetContextType | null>(null);
 
 export const BottomSheetProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const bottomSheetRef = useRef<BottomSheet>(null);
+  const [activeResultId, setActiveResultId] = useState<string | undefined>(undefined);
 
   // callbacks
   const handleSheetChanges = useCallback((index: number) => {
@@ -23,7 +25,15 @@ export const BottomSheetProvider: React.FC<{ children: React.ReactNode }> = ({ c
   const close = () => bottomSheetRef.current?.close();
 
   return (
-    <BottomSheetContext.Provider value={{ bottomSheetRef, handleSheetChanges, open, close }}>
+    <BottomSheetContext.Provider
+      value={{
+        activeResultId,
+        setActiveResultId,
+        bottomSheetRef,
+        open,
+        close,
+      }}
+    >
       {children}
     </BottomSheetContext.Provider>
   );

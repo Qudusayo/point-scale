@@ -58,7 +58,7 @@ export default function HomeScreen() {
           <SafeAreaView className="mx-auto w-11/12 gap-8 py-8" edges={['top', 'left', 'right']}>
             <View className="items-center gap-2">
               <Text>Current CGPA</Text>
-              <Text className="font-system text-7xl font-semibold text-primary">
+              <Text className="text-7xl font-semibold text-primary">
                 {totalCGPA.toFixed(2)}
               </Text>
             </View>

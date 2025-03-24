@@ -92,8 +92,8 @@ export default function ResultCard({ item }: { item: CourseType }) {
         onPress={openBottomSheet}
         className={cn(
           'box-border flex-row justify-between border border-[#c5c5c5] bg-white p-4',
-          swipedToLeft ? 'rounded-r-none border-r-0' : 'rounded-lg',
-          swipedToRight ? 'rounded-l-none border-l-0' : 'rounded-lg',
+          swipedToLeft ? '!rounded-r-none border-r-0' : 'rounded-lg',
+          swipedToRight ? '!rounded-l-none border-l-0' : 'rounded-lg',
         )}
       >
         <View className="flex-1">

@@ -4,8 +4,9 @@ import { useSemesterStore } from '@/store/semester-store';
 import { AntDesign } from '@expo/vector-icons';
 import { Link } from 'expo-router';
 import React, { useEffect, useState } from 'react';
-import { FlatList, Pressable, Text, View } from 'react-native';
+import { FlatList, Pressable, View } from 'react-native';
 import ResultCard from './result-card';
+import Text from './text';
 
 const ResultList = ({ activeSemesterId }: { activeSemesterId: string | null }) => {
   const [cgpa, setCgpa] = useState(0);
@@ -52,7 +53,7 @@ const ResultList = ({ activeSemesterId }: { activeSemesterId: string | null }) =
       keyExtractor={(item) => item.id}
       showsVerticalScrollIndicator={false}
       className="flex-1"
-      contentContainerClassName="gap-4 pb-8"
+      contentContainerClassName="gap-4 pb-28"
       ListEmptyComponent={
         <View className="mt-12 flex-1 self-center justify-self-center">
           <Text className="text-center text-xl font-medium text-[#606067]">

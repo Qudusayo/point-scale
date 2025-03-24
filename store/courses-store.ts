@@ -1,6 +1,5 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { nanoid } from 'nanoid';
-import { LayoutAnimation } from 'react-native';
 import { create } from 'zustand';
 import { createJSONStorage, persist } from 'zustand/middleware';
 
@@ -18,6 +17,7 @@ type CoursesState = {
   addCourse: (data: Omit<CourseType, 'id'>) => Promise<void>;
   getResultById: (id?: string) => CourseType | undefined;
   removeCourse: (id: string) => void;
+  removeCoursesBySessionId: (session_id: string) => void;
 };
 
 export const useCourseStore = create(
@@ -39,11 +39,18 @@ export const useCourseStore = create(
         });
       },
       removeCourse: (course_id: string) => {
-        LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
         set((state) => {
           return {
             ...state,
             courses: state.courses.filter((course) => course.id !== course_id),
+          };
+        });
+      },
+      removeCoursesBySessionId: (session_id: string) => {
+        set((state) => {
+          return {
+            ...state,
+            courses: state.courses.filter((course) => course.session_id !== session_id),
           };
         });
       },

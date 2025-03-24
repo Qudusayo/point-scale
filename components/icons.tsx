@@ -111,7 +111,41 @@ const Pencil = (props: React.ComponentProps<typeof Svg>) => (
   </Svg>
 );
 
+const Category = (props: React.ComponentProps<typeof Svg>) => (
+  <Svg width={24} height={24} viewBox="0 0 24 24" fill="currentColor" {...props}>
+    <Path d="M0 0h24v24H0z" fill="none" />
+    <Path d="M10 3H4a1 1 0 0 0-1 1v6a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4a1 1 0 0 0-1-1m10 0h-6a1 1 0 0 0-1 1v6a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4a1 1 0 0 0-1-1M10 13H4a1 1 0 0 0-1 1v6a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1v-6a1 1 0 0 0-1-1m7 0a4 4 0 1 1-3.995 4.2L13 17l.005-.2A4 4 0 0 1 17 13" />
+  </Svg>
+);
+
+const Badges = (props: React.ComponentProps<typeof Svg>) => (
+  <Svg width={24} height={24} viewBox="0 0 24 24" fill="currentColor" {...props}>
+    <Path d="M0 0h24v24H0z" fill="none" />
+    <Path d="M16.486 12.143 12 14.833l-4.486-2.69A1 1 0 0 0 6 13v4a1 1 0 0 0 .486.857l5 3a1 1 0 0 0 1.028 0l5-3A1 1 0 0 0 18 17v-4a1 1 0 0 0-1.514-.857" />
+    <Path d="M16.486 3.143 12 5.833l-4.486-2.69A1 1 0 0 0 6 4v4a1 1 0 0 0 .486.857l5 3a1 1 0 0 0 1.028 0l5-3A1 1 0 0 0 18 8V4a1 1 0 0 0-1.514-.857" />
+  </Svg>
+);
+
+const Trash = (props: React.ComponentProps<typeof Svg>) => (
+  <Svg
+    width={24}
+    height={24}
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth={2}
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    {...props}
+  >
+    <Path d="M0 0h24v24H0z" stroke="none" />
+    <Path d="M4 7h16m-10 4v6m4-6v6M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2l1-12M9 7V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v3" />
+  </Svg>
+);
+
 export {
+  Badges,
+  Category,
   HexagonLetterA,
   HexagonLetterAPlus,
   HexagonLetterB,
@@ -122,4 +156,5 @@ export {
   Home,
   Pencil,
   Settings,
+  Trash,
 };

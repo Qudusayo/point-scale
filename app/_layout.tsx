@@ -48,6 +48,14 @@ export default function RootLayout() {
               }}
             />
             <Stack.Screen
+              name="manage-semesters"
+              options={{
+                presentation: 'modal',
+                headerShown: false,
+                animation: 'slide_from_right',
+              }}
+            />
+            <Stack.Screen
               name="add-semester"
               options={{
                 presentation: 'modal',

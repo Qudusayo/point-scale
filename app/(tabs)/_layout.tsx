@@ -1,6 +1,6 @@
 import { HapticTab } from '@/components/HapticTab';
-import { Home, Settings } from '@/components/icons';
 import ResultBottomSheetDisplay from '@/components/result-bottom-sheet-display';
+import TabBar from '@/components/tab-bar';
 import Text from '@/components/text';
 import { Colors } from '@/constants/Colors';
 import { useColorScheme } from '@/hooks/useColorScheme';
@@ -31,12 +31,13 @@ export default function TabLayout() {
             // borderBottomWidth: 1,
           },
         }}
+        tabBar={(props) => <TabBar {...props} />}
       >
         <Tabs.Screen
           name="index"
           options={{
             title: 'Home',
-            tabBarIcon: ({ color, size }) => <Home stroke={color} />,
+            // tabBarIcon: ({ color, size }) => <Home stroke={color} />,
             headerShown: false,
           }}
         />
@@ -54,7 +55,7 @@ export default function TabLayout() {
           name="settings"
           options={{
             title: 'Settings',
-            tabBarIcon: ({ color, size }) => <Settings stroke={color} />,
+            // tabBarIcon: ({ color, size }) => <Settings stroke={color} />,
             headerLeft: () => <HeaderLeft text="Settings" />,
           }}
         />

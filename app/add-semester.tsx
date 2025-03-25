@@ -1,33 +1,35 @@
 import Text from '@/components/text';
 import TextInput from '@/components/text-input';
 import { toast } from '@/lib/toast';
+import { cn } from '@/lib/utils';
 import { useSemesterStore } from '@/store/semester-store';
-import React, { useCallback, useState } from 'react';
+import { useFormik } from 'formik';
+import React from 'react';
 import { Pressable, StyleSheet, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import Toast from 'react-native-toast-message';
+import * as Yup from 'yup';
 
 const AddSemester = () => {
-  const [session, setSession] = useState('');
-  const [semester, setSemester] = useState('');
   const addSemesters = useSemesterStore((store) => store.addSemester);
 
-  const handleAddSemester = useCallback(() => {
-    // Validate input
-    if (!session || !semester) {
-      alert('Please fill in all fields');
-      return;
-    }
+  const formData = useFormik({
+    initialValues: {
+      session: '',
+      semester: '',
+    },
+    validationSchema: Yup.object().shape({
+      session: Yup.string().required('Session is required'),
+      semester: Yup.string().required('Semester is required'),
+    }),
+    onSubmit: (values, { resetForm }) => {
+      const { session, semester } = values;
 
-    // Add semester to store
-    addSemesters({ session, semester });
-
-    toast('New Semester Added', `${session} ${semester} has been added successfully`);
-
-    // Reset form fields
-    setSession('');
-    setSemester('');
-  }, [session, semester]);
+      addSemesters({ session, semester });
+      toast('New Semester Added', `${session} ${semester} has been added successfully`);
+      resetForm();
+    },
+  });
 
   return (
     <SafeAreaView className="flex-1">
@@ -39,24 +41,42 @@ const AddSemester = () => {
         <View>
           <Text className="mb-1 text-[#606067]">Level</Text>
           <TextInput
-            className="rounded-lg border border-gray-300 p-2"
+            className={cn(
+              'rounded-lg border border-gray-300 p-2 font-system',
+              formData.touched.session && formData.errors.session
+                ? 'border-red-500'
+                : 'border-gray-300',
+            )}
             placeholder="e.g. 300L"
-            value={session}
-            onChangeText={setSession}
+            value={formData.values.session}
+            onBlur={formData.handleBlur('session')}
+            onChangeText={formData.handleChange('session')}
           />
         </View>
 
         <View>
           <Text className="mb-1 text-[#606067]">Semester</Text>
           <TextInput
-            className="rounded-lg border border-gray-300 p-2 font-system"
+            className={cn(
+              'rounded-lg border border-gray-300 p-2 font-system',
+              formData.touched.semester && formData.errors.semester
+                ? 'border-red-500'
+                : 'border-gray-300',
+            )}
             placeholder="e.g. 2nd Semester"
-            value={semester}
-            onChangeText={setSemester}
+            value={formData.values.semester}
+            onBlur={formData.handleBlur('semester')}
+            onChangeText={formData.handleChange('semester')}
           />
         </View>
 
-        <Pressable className="mt-4 rounded-lg bg-primary py-3" onPress={handleAddSemester}>
+        <Pressable
+          className="mt-4 rounded-lg bg-primary py-3 disabled:opacity-50"
+          onPress={() => formData.handleSubmit()}
+          disabled={
+            !formData.isValid || formData.isSubmitting || formData.isValidating || !formData.dirty
+          }
+        >
           <Text className="text-center text-xl font-semibold text-white">Add Semester</Text>
         </Pressable>
       </View>

@@ -7,18 +7,15 @@ import { useSemesterStore } from '@/store/semester-store';
 import { AntDesign } from '@expo/vector-icons';
 import { Picker } from '@react-native-picker/picker';
 import { useLocalSearchParams } from 'expo-router';
-import React, { useCallback, useEffect, useState } from 'react';
+import { useFormik } from 'formik';
+import React, { useEffect, useState } from 'react';
 import { Modal, Platform, Pressable, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import Toast from 'react-native-toast-message';
+import * as Yup from 'yup';
 
 const AddCourse = () => {
-  const [courseTitle, setCourseTitle] = useState('');
-  const [courseCode, setCourseCode] = useState('');
-  const [courseUnit, setCourseUnit] = useState('');
-  const [courseScore, setCourseScore] = useState('');
   const [isPickerVisible, setIsPickerVisible] = useState(false);
-  const [tempCourseUnit, setTempCourseUnit] = useState('');
   const params = useLocalSearchParams();
   const { addCourse, getResultById, updateCourse } = useCourseStore((store) => store);
 
@@ -30,69 +27,63 @@ const AddCourse = () => {
     (semester) => semester.id === semesterId,
   );
 
+  const formData = useFormik({
+    initialValues: {
+      courseTitle: '',
+      courseCode: '',
+      courseUnit: '',
+      courseScore: '',
+      tempCourseUnit: '',
+    },
+    validationSchema: Yup.object().shape({
+      courseTitle: Yup.string().required('Course title is required'),
+      courseCode: Yup.string().required('Course code is required'),
+      courseUnit: Yup.string().required('Course unit is required'),
+      courseScore: Yup.number()
+        .typeError('Course score must be a number')
+        .required('Course score is required')
+        .min(0, 'Course score must be at least 0')
+        .max(100, 'Course score cannot exceed 100'),
+    }),
+    onSubmit: (values, { resetForm }) => {
+      const { courseTitle, courseCode, courseUnit, courseScore } = values;
+
+      if (course) {
+        updateCourse(courseId, {
+          course_code: courseCode,
+          course_title: courseTitle,
+          course_units: +courseUnit,
+          result: +courseScore,
+        });
+
+        toast('Course Updated', `${courseCode} has been updated successfully`);
+      } else {
+        addCourse({
+          course_code: courseCode,
+          course_title: courseTitle,
+          course_units: +courseUnit,
+          result: +courseScore,
+          session_id: semesterId,
+        });
+
+        toast('New Course Added', `${courseCode} has been added successfully`);
+      }
+
+      resetForm();
+    },
+  });
+
   useEffect(() => {
     if (course) {
-      setCourseTitle(course.course_title);
-      setCourseCode(course.course_code);
-      setCourseUnit(course.course_units.toString());
-      setCourseScore(course.result.toString());
+      formData.setValues({
+        courseTitle: course.course_title,
+        courseCode: course.course_code,
+        courseUnit: course.course_units.toString(),
+        courseScore: course.result.toString(),
+        tempCourseUnit: course.course_units.toString(),
+      });
     }
   }, []);
-
-  const handleAddCourse = useCallback(() => {
-    // Validate input
-    if (!courseTitle || !courseCode || !courseUnit || !courseScore) {
-      alert('Please fill in all fields');
-      return;
-    }
-    if (isNaN(+courseScore)) {
-      alert('Score must be a number');
-      return;
-    }
-
-    addCourse({
-      course_code: courseCode,
-      course_title: courseTitle,
-      course_units: +courseUnit,
-      result: +courseScore,
-      session_id: semesterId,
-    });
-
-    toast('New Course Added', `${courseCode} has been added successfully`);
-
-    // Reset form fields
-    setCourseTitle('');
-    setCourseCode('');
-    setCourseUnit('');
-    setCourseScore('');
-  }, [courseTitle, courseCode, courseUnit, courseScore]);
-
-  const handleUpdateCourse = useCallback(() => {
-    // Validate input
-    if (!courseTitle || !courseCode || !courseUnit || !courseScore) {
-      alert('Please fill in all fields');
-      return;
-    }
-    if (isNaN(+courseScore)) {
-      alert('Score must be a number');
-      return;
-    }
-
-    updateCourse(courseId, {
-      course_code: courseCode,
-      course_title: courseTitle,
-      course_units: +courseUnit,
-      result: +courseScore,
-    });
-
-    toast('Course Updated', `${courseCode} has been updated successfully`);
-
-    // Reset form fields
-    setCourseTitle('');
-    setCourseCode('');
-    setCourseUnit('');
-    setCourseScore('');
-  }, [courseTitle, courseCode, courseUnit, courseScore]);
 
   return (
     <SafeAreaView className="flex-1">
@@ -109,20 +100,32 @@ const AddCourse = () => {
         <View>
           <Text className="mb-1 text-[#606067]">Course Title</Text>
           <TextInput
-            className="rounded-lg border border-gray-300 p-2"
+            className={cn(
+              'rounded-lg border border-gray-300 p-2 font-system',
+              formData.touched.courseTitle && formData.errors.courseTitle
+                ? 'border-red-500'
+                : 'border-gray-300',
+            )}
             placeholder="e.g. Software Engineering"
-            value={courseTitle}
-            onChangeText={setCourseTitle}
+            value={formData.values.courseTitle}
+            onBlur={formData.handleBlur('courseTitle')}
+            onChangeText={formData.handleChange('courseTitle')}
           />
         </View>
 
         <View>
           <Text className="mb-1 text-[#606067]">Course Code</Text>
           <TextInput
-            className="rounded-lg border border-gray-300 p-2 font-system"
+            className={cn(
+              'rounded-lg border border-gray-300 p-2 font-system',
+              formData.touched.courseCode && formData.errors.courseCode
+                ? 'border-red-500'
+                : 'border-gray-300',
+            )}
             placeholder="e.g. CSC 301"
-            value={courseCode}
-            onChangeText={setCourseCode}
+            value={formData.values.courseCode}
+            onBlur={formData.handleBlur('courseCode')}
+            onChangeText={formData.handleChange('courseCode')}
           />
         </View>
 
@@ -131,15 +134,26 @@ const AddCourse = () => {
           {Platform.OS === 'ios' ? (
             <View>
               <Pressable
-                className="flex-row justify-between rounded-lg border border-gray-300 p-3"
+                className={cn(
+                  'flex-row justify-between rounded-lg border p-3 font-system',
+                  formData.touched.courseUnit && formData.errors.courseUnit
+                    ? 'border-red-500'
+                    : 'border-gray-300',
+                )}
                 onPress={() => {
-                  setTempCourseUnit(courseUnit);
+                  // setTempCourseUnit(courseUnit);
+                  formData.setFieldValue('tempCourseUnit', formData.values.courseUnit);
                   setIsPickerVisible(true);
                 }}
               >
-                <Text className={cn(courseUnit ? 'text-black' : 'text-[#6060677f]', 'font-system')}>
-                  {courseUnit
-                    ? `${courseUnit} Unit${courseUnit !== '1' ? 's' : ''}`
+                <Text
+                  className={cn(
+                    formData.values.courseUnit ? 'text-black' : 'text-[#6060677f]',
+                    'font-system',
+                  )}
+                >
+                  {formData.values.courseUnit
+                    ? `${formData.values.courseUnit} Unit${formData.values.courseUnit !== '1' ? 's' : ''}`
                     : 'Select Unit'}
                 </Text>
                 <AntDesign name="down" size={16} color="#606067" />
@@ -151,7 +165,8 @@ const AddCourse = () => {
                     <View className="flex-row justify-end border-b border-gray-200 p-4">
                       <Pressable
                         onPress={() => {
-                          setCourseUnit(tempCourseUnit);
+                          // setCourseUnit(tempCourseUnit);
+                          formData.setFieldValue('courseUnit', formData.values.tempCourseUnit);
                           setIsPickerVisible(false);
                         }}
                       >
@@ -159,9 +174,11 @@ const AddCourse = () => {
                       </Pressable>
                     </View>
                     <Picker
-                      selectedValue={tempCourseUnit}
+                      // selectedValue={tempCourseUnit}
+                      selectedValue={formData.values.tempCourseUnit}
                       onValueChange={(itemValue) => {
-                        setTempCourseUnit(itemValue);
+                        // setTempCourseUnit(itemValue);
+                        formData.setFieldValue('tempCourseUnit', itemValue);
                       }}
                     >
                       <Picker.Item label="1 Unit" value="1" />
@@ -177,8 +194,12 @@ const AddCourse = () => {
           ) : (
             <View className="rounded-lg border border-gray-300">
               <Picker
-                selectedValue={courseUnit}
-                onValueChange={(itemValue) => setCourseUnit(itemValue)}
+                // selectedValue={courseUnit}
+                selectedValue={formData.values.courseUnit}
+                // onValueChange={(itemValue) => setCourseUnit(itemValue)}
+                onValueChange={(itemValue) => {
+                  formData.setFieldValue('courseUnit', itemValue);
+                }}
               >
                 <Picker.Item label="1 Unit" value="1" />
                 <Picker.Item label="2 Units" value="2" />
@@ -193,17 +214,26 @@ const AddCourse = () => {
         <View>
           <Text className="mb-1 text-[#606067]">Score</Text>
           <TextInput
-            className="rounded-lg border border-gray-300 p-2"
-            placeholder="e.g. 70"
-            value={courseScore}
-            onChangeText={setCourseScore}
+            className={cn(
+              'rounded-lg border border-gray-300 p-2 font-system',
+              formData.touched.courseScore && formData.errors.courseScore
+                ? 'border-red-500'
+                : 'border-gray-300',
+            )}
+            placeholder="0 - 100"
+            // value={courseScore}
+            // onChangeText={setCourseScore}
+            value={formData.values.courseScore}
+            onBlur={formData.handleBlur('courseScore')}
+            onChangeText={formData.handleChange('courseScore')}
             keyboardType="numeric"
           />
         </View>
 
         <Pressable
-          className="mt-4 rounded-lg bg-primary py-3"
-          onPress={course ? handleUpdateCourse : handleAddCourse}
+          className="mt-4 rounded-lg bg-primary py-3 disabled:opacity-50"
+          onPress={() => formData.handleSubmit()}
+          disabled={!formData.isValid || formData.isSubmitting || formData.isValidating || !formData.dirty}
         >
           <Text className="text-center text-xl font-semibold text-white">
             {course ? 'Update Course' : 'Add Course'}
@@ -214,5 +244,9 @@ const AddCourse = () => {
     </SafeAreaView>
   );
 };
+
+const ErrorText = ({ error }: { error: string | undefined }) => (
+  <Text className="text-sm text-red-500">{error}</Text>
+);
 
 export default AddCourse;

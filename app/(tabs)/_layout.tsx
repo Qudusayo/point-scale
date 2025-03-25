@@ -10,7 +10,7 @@ import { View } from 'react-native';
 
 const HeaderLeft = ({ text }: { text: string }) => (
   <View className="flex-row items-center gap-4 px-4">
-    <Text className="text-2xl font-bold text-[#5271FF]">{text}</Text>
+    <Text className="text-2xl text-[#5271FF]">{text}</Text>
   </View>
 );
 

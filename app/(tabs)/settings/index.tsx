@@ -17,9 +17,11 @@ const NavLink = ({ title, description, icon, href = '/settings' }: NavLinkProps)
       <Pressable className="flex-row items-center px-4">
         {icon({
           fill: '#bec3c9',
+          width: 32,
+          height: 32,
         })}
         <View className="px-4 leading-3">
-          <Text className="text-base">{title}</Text>
+          <Text className="text-xl">{title}</Text>
           <Text className="text-sm leading-4 text-[#bec3c9]">{description}</Text>
         </View>
       </Pressable>
@@ -29,7 +31,7 @@ const NavLink = ({ title, description, icon, href = '/settings' }: NavLinkProps)
 
 const Settings = () => {
   return (
-    <View className="flex-1 gap-4 pt-4">
+    <View className="flex-1 gap-8 bg-white pt-4">
       <NavLink
         title="Semesters"
         description="Manage your semesters"

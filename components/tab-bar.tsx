@@ -1,4 +1,5 @@
 import { BottomTabBarProps } from '@react-navigation/bottom-tabs';
+import * as Haptics from 'expo-haptics';
 import React from 'react';
 import { Platform, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { Home, Settings } from './icons';
@@ -13,7 +14,7 @@ const TabBar = ({ state, descriptors, navigation }: BottomTabBarProps) => {
   };
 
   return (
-    <View className="absolute bottom-0 w-full pt-12 android:pt-10 border border-transparent">
+    <View className="android:pt-10 absolute bottom-0 w-full border border-transparent pt-12">
       <View style={styles.tabBar}>
         {state.routes.map((route, index) => {
           const { options } = descriptors[route.key];
@@ -56,6 +57,12 @@ const TabBar = ({ state, descriptors, navigation }: BottomTabBarProps) => {
               onLongPress={onLongPress}
               key={route.key}
               style={styles.tabBarItem}
+              onPressIn={(ev) => {
+                if (process.env.EXPO_OS === 'ios') {
+                  // Add a soft haptic feedback when pressing down on the tabs.
+                  Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+                }
+              }}
             >
               {icons[route.name as keyof typeof icons]()({
                 width: 20,
@@ -66,7 +73,6 @@ const TabBar = ({ state, descriptors, navigation }: BottomTabBarProps) => {
               <Text
                 style={{
                   fontSize: 10,
-                  fontWeight: 'bold',
                   color: isFocused ? '#5271FF' : greyColor,
                 }}
               >
@@ -94,10 +100,11 @@ const styles = StyleSheet.create({
     borderCurve: 'continuous',
     shadowColor: 'black',
     shadowOffset: { width: 0, height: 10 },
-    shadowRadius: 10,
+    shadowRadius: 20,
     shadowOpacity: 0.1,
     width: '50%',
     alignSelf: 'center',
+    elevation: 10,
   },
   tabBarItem: {
     flex: 1,

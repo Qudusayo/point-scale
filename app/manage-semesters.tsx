@@ -12,11 +12,11 @@ interface SemesterProps extends React.ComponentProps<typeof Pressable> {
 const Semester = ({ semester, onPress }: SemesterProps) => {
   return (
     <Pressable
-      className="flex-row justify-between border-b border-gray-300 py-4 text-lg font-bold text-gray-800"
+      className="flex-row justify-between border-b border-gray-200 py-4 text-lg font-bold text-gray-800"
       onPress={onPress}
     >
       <View className="leading-3">
-        <Text className="text-base">
+        <Text className="text-xl">
           {semester.session} {semester.semester}
         </Text>
       </View>

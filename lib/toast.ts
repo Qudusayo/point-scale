@@ -7,8 +7,9 @@ export const toast = (title: string, msg: string, type?: ToastType) => {
     swipeable: true,
     text1: title,
     text1Style: {
-      fontFamily: 'AtkinsonHyperlegible !important',
+      fontFamily: 'AtkinsonHyperlegible',
       fontSize: 16,
+      fontWeight: 400,
     },
 
     text2: msg,

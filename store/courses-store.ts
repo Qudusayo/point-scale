@@ -17,6 +17,7 @@ type CoursesState = {
   addCourse: (data: Omit<CourseType, 'id'>) => Promise<void>;
   getResultById: (id?: string) => CourseType | undefined;
   removeCourse: (id: string) => void;
+  updateCourse: (id: string, data: Partial<CourseType>) => void;
   removeCoursesBySessionId: (session_id: string) => void;
 };
 
@@ -43,6 +44,22 @@ export const useCourseStore = create(
           return {
             ...state,
             courses: state.courses.filter((course) => course.id !== course_id),
+          };
+        });
+      },
+      updateCourse: (course_id: string, data: Partial<CourseType>) => {
+        set((state) => {
+          const courseIndex = state.courses.findIndex((course) => course.id === course_id);
+          if (courseIndex === -1) return state;
+          const updatedCourse = {
+            ...state.courses[courseIndex],
+            ...data,
+          };
+          const updatedCourses = [...state.courses];
+          updatedCourses[courseIndex] = updatedCourse;
+          return {
+            ...state,
+            courses: updatedCourses,
           };
         });
       },

@@ -14,6 +14,10 @@ import { GestureHandlerRootView } from 'react-native-gesture-handler';
 SplashScreen.preventAutoHideAsync();
 colorScheme.set('light');
 
+export const unstable_settings = {
+  initialRouteName: '(tabs)',
+};
+
 export default function RootLayout() {
   const [loaded] = useFonts({
     WinkySans: require('../assets/fonts/WinkySans.ttf'),
@@ -38,7 +42,7 @@ export default function RootLayout() {
           <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
           <Stack.Screen name="+not-found" />
           <Stack.Screen
-            name="add-course/[semester-id]"
+            name="manage-course/[semester-id]"
             options={{
               presentation: 'modal',
               headerShown: false,
@@ -47,6 +51,14 @@ export default function RootLayout() {
           />
           <Stack.Screen
             name="manage-semesters"
+            options={{
+              presentation: 'modal',
+              headerShown: false,
+              animation: 'slide_from_right',
+            }}
+          />
+          <Stack.Screen
+            name="import"
             options={{
               presentation: 'modal',
               headerShown: false,

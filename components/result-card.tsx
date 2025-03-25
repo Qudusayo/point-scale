@@ -4,6 +4,7 @@ import { cn } from '@/lib/utils';
 import { CourseType, useCourseStore } from '@/store/courses-store';
 import { Entypo } from '@expo/vector-icons';
 import Feather from '@expo/vector-icons/Feather';
+import { Link } from 'expo-router';
 import React, { useRef, useState } from 'react';
 import { Alert, Pressable, View } from 'react-native';
 import ReanimatedSwipeable, {
@@ -24,14 +25,18 @@ function RightAction({ onPress }: React.ComponentProps<typeof Pressable>) {
   );
 }
 
-function LeftAction({ onPress }: React.ComponentProps<typeof Pressable>) {
+interface LeftActionProps extends React.ComponentProps<typeof Pressable> {
+  semesterId: string;
+  courseId: string;
+}
+
+function LeftAction({ semesterId, courseId }: LeftActionProps) {
   return (
-    <Pressable
-      className="block h-full w-1/5 items-center justify-center rounded-lg rounded-r-none bg-[#5271FF]"
-      onPress={onPress}
-    >
-      <Pencil stroke="#fff" />
-    </Pressable>
+    <Link href={`/manage-course/${semesterId}?course-id=${courseId}`} asChild>
+      <Pressable className="block h-full w-1/5 items-center justify-center rounded-lg rounded-r-none bg-[#5271FF]">
+        <Pencil stroke="#fff" />
+      </Pressable>
+    </Link>
   );
 }
 
@@ -79,7 +84,7 @@ export default function ResultCard({ item }: { item: CourseType }) {
       rightThreshold={40}
       onActivated={() => console.log('Activated')}
       renderRightActions={() => <RightAction onPress={handleDelete} />}
-      renderLeftActions={() => <LeftAction onPress={() => console.log('Edit pressed')} />}
+      renderLeftActions={() => <LeftAction courseId={item.id} semesterId={item.session_id} />}
       overshootFriction={8}
       dragOffsetFromRightEdge={40}
       overshootLeft={false}

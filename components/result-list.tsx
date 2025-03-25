@@ -38,7 +38,7 @@ const ResultList = ({ activeSemesterId }: { activeSemesterId: string | null }) =
               <Text className="text-[#606067]">Current CGPA: {cgpa}</Text>
             </View>
           </View>
-          <Link href={'/add-course/' + activeSemesterId} asChild>
+          <Link href={'/manage-course/' + activeSemesterId} asChild>
             <Pressable
               hitSlop={8}
               className="flex-row items-center gap-2 rounded-lg bg-primary px-4 py-2"

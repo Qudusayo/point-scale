@@ -4,7 +4,6 @@ import Text from '@/components/text';
 import { calculateCGPA } from '@/constants/utils';
 import { useCourseStore } from '@/store/courses-store';
 import { useSemesterStore } from '@/store/semester-store';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useEffect, useState } from 'react';
 import { View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -26,22 +25,13 @@ export default function HomeScreen() {
     setTotalCGPA(cgpa[3] || 0);
   };
 
-  const clearStorage = async () => {
-    try {
-      await AsyncStorage.clear();
-      console.log('AsyncStorage cleared!');
-    } catch (error) {
-      console.error('Error clearing AsyncStorage:', error);
-    }
-  };
-
   useEffect(() => {
-    // clearStorage();   // For testing purposes only
     calculateTotalCGPA();
     setActiveSemesterId(semesters[0]?.id || null);
   }, []);
 
   useEffect(() => {
+    console.log({ activeSemesterId }, !activeSemesterId);
     if (!activeSemesterId) {
       setActiveSemesterId(semesters[0]?.id || null);
     }
@@ -58,9 +48,7 @@ export default function HomeScreen() {
           <SafeAreaView className="mx-auto w-11/12 gap-8 py-8" edges={['top', 'left', 'right']}>
             <View className="items-center gap-2">
               <Text>Current CGPA</Text>
-              <Text className="text-7xl font-semibold text-primary">
-                {totalCGPA.toFixed(2)}
-              </Text>
+              <Text className="text-7xl font-semibold text-primary">{totalCGPA.toFixed(2)}</Text>
             </View>
             <View className="flex-row gap-4">
               <DetailsCard title="Units Reg." value={totalUnits + ''} />

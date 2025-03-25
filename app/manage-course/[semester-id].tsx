@@ -3,11 +3,12 @@ import TextInput from '@/components/text-input';
 import { toast } from '@/lib/toast';
 import { cn } from '@/lib/utils';
 import { useCourseStore } from '@/store/courses-store';
+import { useSemesterStore } from '@/store/semester-store';
 import { AntDesign } from '@expo/vector-icons';
 import { Picker } from '@react-native-picker/picker';
 import { useLocalSearchParams } from 'expo-router';
-import React, { useCallback, useState } from 'react';
-import { Modal, Platform, Pressable, StyleSheet, View } from 'react-native';
+import React, { useCallback, useEffect, useState } from 'react';
+import { Modal, Platform, Pressable, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import Toast from 'react-native-toast-message';
 
@@ -19,9 +20,24 @@ const AddCourse = () => {
   const [isPickerVisible, setIsPickerVisible] = useState(false);
   const [tempCourseUnit, setTempCourseUnit] = useState('');
   const params = useLocalSearchParams();
-  const addCourse = useCourseStore((store) => store.addCourse);
+  const { addCourse, getResultById, updateCourse } = useCourseStore((store) => store);
 
+  const courseId = params['course-id'] as string;
   const semesterId = params['semester-id'] as string;
+
+  const course = getResultById(courseId);
+  const semester = useSemesterStore((store) => store.semesters).find(
+    (semester) => semester.id === semesterId,
+  );
+
+  useEffect(() => {
+    if (course) {
+      setCourseTitle(course.course_title);
+      setCourseCode(course.course_code);
+      setCourseUnit(course.course_units.toString());
+      setCourseScore(course.result.toString());
+    }
+  }, []);
 
   const handleAddCourse = useCallback(() => {
     // Validate input
@@ -51,11 +67,43 @@ const AddCourse = () => {
     setCourseScore('');
   }, [courseTitle, courseCode, courseUnit, courseScore]);
 
+  const handleUpdateCourse = useCallback(() => {
+    // Validate input
+    if (!courseTitle || !courseCode || !courseUnit || !courseScore) {
+      alert('Please fill in all fields');
+      return;
+    }
+    if (isNaN(+courseScore)) {
+      alert('Score must be a number');
+      return;
+    }
+
+    updateCourse(courseId, {
+      course_code: courseCode,
+      course_title: courseTitle,
+      course_units: +courseUnit,
+      result: +courseScore,
+    });
+
+    toast('Course Updated', `${courseCode} has been updated successfully`);
+
+    // Reset form fields
+    setCourseTitle('');
+    setCourseCode('');
+    setCourseUnit('');
+    setCourseScore('');
+  }, [courseTitle, courseCode, courseUnit, courseScore]);
+
   return (
     <SafeAreaView className="flex-1">
-      <Text className="py-12 text-center text-2xl font-semibold uppercase text-primary">
-        Add New Course
-      </Text>
+      <View className="android:pt-20 py-12">
+        <Text className="text-center text-2xl font-semibold uppercase text-primary">
+          {course ? 'Update Course' : 'Add New Course'}
+        </Text>
+        <Text className="mx-auto w-11/12 text-center text-sm font-semibold text-gray-700">
+          {semester?.session} {semester?.semester}
+        </Text>
+      </View>
 
       <View className="mx-auto w-11/12 gap-4">
         <View>
@@ -153,8 +201,13 @@ const AddCourse = () => {
           />
         </View>
 
-        <Pressable className="mt-4 rounded-lg bg-primary py-3" onPress={handleAddCourse}>
-          <Text className="text-center text-xl font-semibold text-white">Add Course</Text>
+        <Pressable
+          className="mt-4 rounded-lg bg-primary py-3"
+          onPress={course ? handleUpdateCourse : handleAddCourse}
+        >
+          <Text className="text-center text-xl font-semibold text-white">
+            {course ? 'Update Course' : 'Add Course'}
+          </Text>
         </Pressable>
       </View>
       <Toast />
@@ -163,5 +216,3 @@ const AddCourse = () => {
 };
 
 export default AddCourse;
-
-const styles = StyleSheet.create({});

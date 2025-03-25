@@ -12,7 +12,7 @@ export type SemesterType = {
 
 type SemesterState = {
   semesters: SemesterType[];
-  addSemester: (data: Omit<SemesterType, 'id'>) => void;
+  addSemester: (data: Omit<SemesterType, 'id'>) => string;
   removeSemester: (id: string) => void;
 };
 
@@ -26,16 +26,18 @@ export const useSemesterStore = create(
     (set) => ({
       semesters: [],
       addSemester: (data: Omit<SemesterType, 'id'>) => {
+        const id = nanoid();
         set((state) => {
           const semester = {
             ...data,
-            id: nanoid(),
+            id,
           };
           return {
             ...state,
             semesters: [semester, ...state.semesters],
           };
         });
+        return id;
       },
       removeSemester: (course_id: string) => {
         set((state) => {

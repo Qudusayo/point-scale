@@ -1,4 +1,4 @@
-import { Badges, Category } from '@/components/icons';
+import { Badges, Category, SortAscendingShapes } from '@/components/icons';
 import Text from '@/components/text';
 import { Link } from 'expo-router';
 import React from 'react';
@@ -39,6 +39,7 @@ const Settings = () => {
         href="/manage-semesters"
       />
       <NavLink title="Grades" description="Manage your grades" icon={Badges} />
+      <NavLink title="Courses Order" description="Manage your courses order" icon={SortAscendingShapes} />
     </View>
   );
 };

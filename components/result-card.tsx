@@ -5,7 +5,7 @@ import { CourseType, useCourseStore } from '@/store/courses-store';
 import { Entypo } from '@expo/vector-icons';
 import Feather from '@expo/vector-icons/Feather';
 import { Link } from 'expo-router';
-import React, { useRef, useState } from 'react';
+import React, { useCallback, useRef, useState } from 'react';
 import { Alert, Pressable, View } from 'react-native';
 import ReanimatedSwipeable, {
   SwipeableMethods,
@@ -32,7 +32,13 @@ interface LeftActionProps extends React.ComponentProps<typeof Pressable> {
 
 function LeftAction({ semesterId, courseId }: LeftActionProps) {
   return (
-    <Link href={`/manage-course/${semesterId}?course-id=${courseId}`} asChild>
+    <Link
+      href={{
+        pathname: `/manage-course/${semesterId}`,
+        params: { 'course-id': courseId },
+      }}
+      asChild
+    >
       <Pressable className="block h-full w-1/5 items-center justify-center rounded-lg rounded-r-none bg-[#5271FF]">
         <Pencil stroke="#fff" />
       </Pressable>
@@ -70,11 +76,18 @@ export default function ResultCard({ item }: { item: CourseType }) {
     ]);
   };
 
-  const openHandlerCallback = (dir: 'left' | 'right') =>
-    dir === 'right' ? setSwipedToLeft(true) : setSwipedToRight(true);
+  const openHandlerCallback = useCallback((dir: 'left' | 'right') => {
+    setSwipedToLeft(dir === 'right');
+    setSwipedToRight(dir === 'left');
+  }, []);
 
-  const closeHandlerCallback = (dir: 'left' | 'right') =>
-    dir === 'right' ? setSwipedToLeft(false) : setSwipedToRight(false);
+  const closeHandlerCallback = useCallback(
+    (dir: 'left' | 'right') => {
+      setSwipedToLeft(dir === 'right' ? false : swipedToLeft);
+      setSwipedToRight(dir === 'left' ? false : swipedToRight);
+    },
+    [swipedToLeft, swipedToRight],
+  );
 
   return (
     <ReanimatedSwipeable
@@ -82,12 +95,12 @@ export default function ResultCard({ item }: { item: CourseType }) {
       friction={2}
       enableTrackpadTwoFingerGesture
       rightThreshold={40}
-      onActivated={() => console.log('Activated')}
       renderRightActions={() => <RightAction onPress={handleDelete} />}
       renderLeftActions={() => <LeftAction courseId={item.id} semesterId={item.session_id} />}
-      overshootFriction={8}
+      overshootFriction={0}
       dragOffsetFromRightEdge={40}
       overshootLeft={false}
+      overshootRight={false}
       onSwipeableWillOpen={openHandlerCallback}
       onSwipeableOpen={openHandlerCallback}
       onSwipeableClose={closeHandlerCallback}

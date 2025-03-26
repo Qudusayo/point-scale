@@ -7,6 +7,7 @@ import { useSemesterStore } from '@/store/semester-store';
 import { useEffect, useState } from 'react';
 import { View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import * as SplashScreen from 'expo-splash-screen';
 
 export default function HomeScreen() {
   const courses = useCourseStore((store) => store.courses);
@@ -28,11 +29,15 @@ export default function HomeScreen() {
   useEffect(() => {
     calculateTotalCGPA();
     setActiveSemesterId(semesters[0]?.id || null);
+
+    setTimeout(() => {
+      SplashScreen.hideAsync();
+    }, 500);
   }, []);
 
   useEffect(() => {
-    console.log({ activeSemesterId }, !activeSemesterId);
-    if (!activeSemesterId) {
+    // console.log({ activeSemesterId }, !!activeSemesterId, semesters);
+    if (!!activeSemesterId) {
       setActiveSemesterId(semesters[0]?.id || null);
     }
   }, [semesters]);
@@ -84,7 +89,7 @@ export default function HomeScreen() {
 const DetailsCard = ({ title, value }: { title: string; value: string }) => {
   return (
     <View className="flex-1 items-center gap-1 rounded-lg bg-[#f3f4f6] p-4">
-      <Text className="font-system text-[#606067]">{title}</Text>
+      <Text className="font-system text-sm text-[#606067]">{title}</Text>
       <Text className="font-system text-2xl font-semibold text-primary">{value}</Text>
     </View>
   );

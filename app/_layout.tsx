@@ -3,9 +3,14 @@ import { Stack } from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
 import { StatusBar } from 'expo-status-bar';
 import { colorScheme } from 'nativewind';
-import { useEffect } from 'react';
 import 'react-native-reanimated';
+import { configureReanimatedLogger, ReanimatedLogLevel } from 'react-native-reanimated';
 import '../global.css';
+
+configureReanimatedLogger({
+  level: ReanimatedLogLevel.error,
+  strict: true,
+});
 
 import { BottomSheetProvider } from '@/context/bottom-sheet-context';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
@@ -23,12 +28,6 @@ export default function RootLayout() {
     WinkySans: require('../assets/fonts/WinkySans.ttf'),
     AtkinsonHyperlegible: require('../assets/fonts/AtkinsonHyperlegible.ttf'),
   });
-
-  useEffect(() => {
-    if (loaded) {
-      SplashScreen.hideAsync();
-    }
-  }, [loaded]);
 
   if (!loaded) {
     return null;

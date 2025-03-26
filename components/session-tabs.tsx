@@ -32,31 +32,29 @@ const SessionTabs = ({ activeSemesterId, setActiveSemesterId }: SessionTabsProps
   const semesters = useSemesterStore((store) => store.semesters);
 
   return (
-    <View className="flex-row gap-2">
-      {semesters.length ? (
-        <ScrollView
-          horizontal
-          showsHorizontalScrollIndicator={false}
-          contentContainerClassName="iflex-row items-center gap-3"
-        >
-          {semesters.map((semester) => (
-            <Selector
-              key={semester.id}
-              onPress={() => {
-                setActiveSemesterId(semester.id);
-              }}
-              title={`${semester.session} ${semester.semester}`}
-              active={activeSemesterId === semester.id}
-            />
-          ))}
-        </ScrollView>
-      ) : null}
-      <Link href="/add-semester" asChild>
-        <Pressable hitSlop={8} className="rounded-lg bg-primary p-2">
-          <AntDesign name="plus" size={24} color="#fff" />
-        </Pressable>
-      </Link>
-    </View>
+    <FlatList
+      horizontal
+      showsHorizontalScrollIndicator={false}
+      data={semesters}
+      keyExtractor={(semester) => semester.id}
+      renderItem={({ item: semester }) => (
+        <Selector
+          onPress={() => {
+            setActiveSemesterId(semester.id);
+          }}
+          title={`${semester.session} ${semester.semester}`}
+          active={activeSemesterId === semester.id}
+        />
+      )}
+      contentContainerClassName="flex-row items-center gap-3"
+      ListFooterComponent={
+        <Link href="/add-semester" asChild>
+          <Pressable hitSlop={8} className="rounded-lg bg-primary p-2">
+            <AntDesign name="plus" size={24} color="#fff" />
+          </Pressable>
+        </Link>
+      }
+    />
   );
 };
 

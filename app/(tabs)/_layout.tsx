@@ -1,3 +1,4 @@
+import CourseOrderBottomSheetDisplay from '@/components/course-order-bottom-sheet';
 import { HapticTab } from '@/components/HapticTab';
 import ResultBottomSheetDisplay from '@/components/result-bottom-sheet-display';
 import TabBar from '@/components/tab-bar';
@@ -61,6 +62,7 @@ export default function TabLayout() {
         />
       </Tabs>
       <ResultBottomSheetDisplay />
+      <CourseOrderBottomSheetDisplay />
     </>
   );
 }

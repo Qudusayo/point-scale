@@ -52,11 +52,11 @@ export default function ResultCard({ item }: { item: CourseType }) {
   const [swipedToLeft, setSwipedToLeft] = useState(false);
   const [swipedToRight, setSwipedToRight] = useState(false);
   const removeCourse = useCourseStore((store) => store.removeCourse);
-  const { bottomSheetRef, setActiveResultId } = useBottomSheetContext();
+  const { open, setActiveResultId } = useBottomSheetContext();
 
   const openBottomSheet = () => {
     setActiveResultId(item.id);
-    bottomSheetRef.current?.snapToIndex(1);
+    open('result');
   };
 
   const handleDelete = () => {

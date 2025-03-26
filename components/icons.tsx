@@ -167,9 +167,34 @@ const SortAscendingShapes = (props: React.ComponentProps<typeof Svg>) => (
   </Svg>
 );
 
+const CircleCheck = (props: React.ComponentProps<typeof Svg>) => (
+  <Svg width={24} height={24} viewBox="0 0 24 24" fill="currentColor" {...props}>
+    <Path d="M0 0h24v24H0z" fill="none" />
+    <Path d="M17 3.34a10 10 0 1 1-14.995 8.984L2 12l.005-.324A10 10 0 0 1 17 3.34m-1.293 5.953a1 1 0 0 0-1.32-.083l-.094.083L11 12.585l-1.293-1.292-.094-.083a1 1 0 0 0-1.403 1.403l.083.094 2 2 .094.083a1 1 0 0 0 1.226 0l.094-.083 4-4 .083-.094a1 1 0 0 0-.083-1.32" />
+  </Svg>
+);
+
+const RotateClockwise2 = (props: React.ComponentProps<typeof Svg>) => (
+  <Svg
+    width={24}
+    height={24}
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth={2}
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    {...props}
+  >
+    <Path d="M0 0h24v24H0z" stroke="none" />
+    <Path d="M9 4.55a8 8 0 0 1 6 14.9M15 15v5h5M5.63 7.16v.01M4.06 11v.01m.57 4.09v.01m2.53 3.26v.01M11 19.94v.01" />
+  </Svg>
+);
+
 export {
   Badges,
   Category,
+  CircleCheck,
   CircleDashedCheck,
   HexagonLetterA,
   HexagonLetterAPlus,
@@ -180,6 +205,7 @@ export {
   HexagonLetterF,
   Home,
   Pencil,
+  RotateClockwise2,
   Settings,
   SortAscendingShapes,
   Trash,

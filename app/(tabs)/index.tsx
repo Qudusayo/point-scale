@@ -37,22 +37,6 @@ export default function HomeScreen() {
     calculateTotalCGPA();
   }, [courses, activeSemesterId]);
 
-  // useFocusEffect(
-  //   useCallback(() => {
-  //     console.log('Tab screen is focused');
-  //     console.log({ activeSemesterId }, !!activeSemesterId, semesters);
-  //     if (!activeSemesterId && semesters.length) {
-  //       setActiveSemesterId(semesters[0]?.id);
-  //     } else {
-  //       setActiveSemesterId(null);
-  //     }
-
-  //     return () => {
-  //       console.log('Tab screen is unfocused');
-  //     };
-  //   }, []),
-  // );
-
   return (
     <View className="flex-1">
       <View className="flex-1">

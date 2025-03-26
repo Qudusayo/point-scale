@@ -130,6 +130,25 @@ const AddCourse = () => {
         </View>
 
         <View>
+          <Text className="mb-1 text-[#606067]">Score</Text>
+          <TextInput
+            className={cn(
+              'rounded-lg border border-gray-300 p-2 font-system',
+              formData.touched.courseScore && formData.errors.courseScore
+                ? 'border-red-500'
+                : 'border-gray-300',
+            )}
+            placeholder="0 - 100"
+            // value={courseScore}
+            // onChangeText={setCourseScore}
+            value={formData.values.courseScore}
+            onBlur={formData.handleBlur('courseScore')}
+            onChangeText={formData.handleChange('courseScore')}
+            keyboardType="numeric"
+          />
+        </View>
+
+        <View>
           <Text className="mb-1 text-[#606067]">Course Unit</Text>
           {Platform.OS === 'ios' ? (
             <View>
@@ -211,29 +230,12 @@ const AddCourse = () => {
           )}
         </View>
 
-        <View>
-          <Text className="mb-1 text-[#606067]">Score</Text>
-          <TextInput
-            className={cn(
-              'rounded-lg border border-gray-300 p-2 font-system',
-              formData.touched.courseScore && formData.errors.courseScore
-                ? 'border-red-500'
-                : 'border-gray-300',
-            )}
-            placeholder="0 - 100"
-            // value={courseScore}
-            // onChangeText={setCourseScore}
-            value={formData.values.courseScore}
-            onBlur={formData.handleBlur('courseScore')}
-            onChangeText={formData.handleChange('courseScore')}
-            keyboardType="numeric"
-          />
-        </View>
-
         <Pressable
           className="mt-4 rounded-lg bg-primary py-3 disabled:opacity-50"
           onPress={() => formData.handleSubmit()}
-          disabled={!formData.isValid || formData.isSubmitting || formData.isValidating || !formData.dirty}
+          disabled={
+            !formData.isValid || formData.isSubmitting || formData.isValidating || !formData.dirty
+          }
         >
           <Text className="text-center text-xl font-semibold text-white">
             {course ? 'Update Course' : 'Add Course'}

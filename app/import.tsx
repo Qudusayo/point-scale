@@ -20,8 +20,8 @@ interface ResultType {
 const Import = () => {
   const params = useLocalSearchParams();
   const encryptedData = params['result'] as string;
-  const addSemester = useSemesterStore((state) => state.addSemester);
   const addCourse = useCourseStore((state) => state.addCourse);
+  const { addSemester, setActiveSemesterId } = useSemesterStore((state) => state);
 
   const clearStorage = async () => {
     try {
@@ -33,7 +33,7 @@ const Import = () => {
   };
 
   useEffect(() => {
-    console.log('Encrypted Data:', encryptedData);
+    // console.log('Encrypted Data:', encryptedData);
     (async () => {
       try {
         const secretKey = 'your-secret-key';
@@ -61,9 +61,10 @@ const Import = () => {
             session_id: semesterId,
           });
         }
+        setActiveSemesterId(semesterId);
       } catch (error) {
         console.log('Error decrypting data:', error);
-      }
+      } 
     })();
   }, []);
 

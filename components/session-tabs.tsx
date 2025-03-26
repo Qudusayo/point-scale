@@ -1,9 +1,9 @@
 import { cn } from '@/lib/utils';
-import { useSemesterStore } from '@/store/semester-store';
+import { SemesterType } from '@/store/semester-store';
 import { AntDesign } from '@expo/vector-icons';
 import { Link } from 'expo-router';
 import React from 'react';
-import { Pressable, PressableProps, ScrollView, View } from 'react-native';
+import { FlatList, Pressable, PressableProps } from 'react-native';
 import Text from './text';
 
 interface SelectorProps extends PressableProps {
@@ -12,8 +12,9 @@ interface SelectorProps extends PressableProps {
 }
 
 interface SessionTabsProps {
+  semesters: SemesterType[];
   activeSemesterId: string | null;
-  setActiveSemesterId: React.Dispatch<React.SetStateAction<string | null>>;
+  setActiveSemesterId: (id: string) => void;
 }
 
 const Selector = ({ title, active, ...props }: SelectorProps) => (
@@ -28,9 +29,7 @@ const Selector = ({ title, active, ...props }: SelectorProps) => (
   </Pressable>
 );
 
-const SessionTabs = ({ activeSemesterId, setActiveSemesterId }: SessionTabsProps) => {
-  const semesters = useSemesterStore((store) => store.semesters);
-
+const SessionTabs = ({ semesters, activeSemesterId, setActiveSemesterId }: SessionTabsProps) => {
   return (
     <FlatList
       horizontal

@@ -4,19 +4,18 @@ import Text from '@/components/text';
 import { calculateCGPA } from '@/constants/utils';
 import { useCourseStore } from '@/store/courses-store';
 import { useSemesterStore } from '@/store/semester-store';
+import * as SplashScreen from 'expo-splash-screen';
 import { useEffect, useState } from 'react';
 import { View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import * as SplashScreen from 'expo-splash-screen';
 
 export default function HomeScreen() {
   const courses = useCourseStore((store) => store.courses);
-  const semesters = useSemesterStore((store) => store.semesters);
   const [totalCGPA, setTotalCGPA] = useState(0);
-  const [activeSemesterId, setActiveSemesterId] = useState<string | null>(null);
   const [totalWGPA, setTotalWGPA] = useState(0);
   const [totalUnits, setTotalUnits] = useState(0);
   const [unitsPassed, setUnitsPassed] = useState(0);
+  const { semesters, activeSemesterId, setActiveSemesterId } = useSemesterStore((store) => store);
 
   const calculateTotalCGPA = () => {
     const cgpa = calculateCGPA(courses);
@@ -27,24 +26,32 @@ export default function HomeScreen() {
   };
 
   useEffect(() => {
+    console.log('COMPONENT MOUNTED');
     calculateTotalCGPA();
-    setActiveSemesterId(semesters[0]?.id || null);
-
     setTimeout(() => {
       SplashScreen.hideAsync();
     }, 500);
   }, []);
 
   useEffect(() => {
-    // console.log({ activeSemesterId }, !!activeSemesterId, semesters);
-    if (!!activeSemesterId) {
-      setActiveSemesterId(semesters[0]?.id || null);
-    }
-  }, [semesters]);
-
-  useEffect(() => {
     calculateTotalCGPA();
-  }, [courses]);
+  }, [courses, activeSemesterId]);
+
+  // useFocusEffect(
+  //   useCallback(() => {
+  //     console.log('Tab screen is focused');
+  //     console.log({ activeSemesterId }, !!activeSemesterId, semesters);
+  //     if (!activeSemesterId && semesters.length) {
+  //       setActiveSemesterId(semesters[0]?.id);
+  //     } else {
+  //       setActiveSemesterId(null);
+  //     }
+
+  //     return () => {
+  //       console.log('Tab screen is unfocused');
+  //     };
+  //   }, []),
+  // );
 
   return (
     <View className="flex-1">
@@ -62,6 +69,7 @@ export default function HomeScreen() {
             </View>
 
             <SessionTabs
+              semesters={semesters}
               activeSemesterId={activeSemesterId}
               setActiveSemesterId={setActiveSemesterId}
             />

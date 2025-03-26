@@ -11,6 +11,8 @@ export type SemesterType = {
 };
 
 type SemesterState = {
+  activeSemesterId: string | null;
+  setActiveSemesterId: (id: string) => void;
   semesters: SemesterType[];
   addSemester: (data: Omit<SemesterType, 'id'>) => string;
   removeSemester: (id: string) => void;
@@ -23,10 +25,21 @@ const persistConfig: PersistOptions<SemesterState> = {
 
 export const useSemesterStore = create(
   persist<SemesterState>(
-    (set) => ({
+    (set, get) => ({
       semesters: [],
+      activeSemesterId: null,
+      setActiveSemesterId: (id: string) => {
+        set((state) => {
+          return {
+            ...state,
+            activeSemesterId: id,
+          };
+        });
+      },
       addSemester: (data: Omit<SemesterType, 'id'>) => {
         const id = nanoid();
+        const { activeSemesterId } = get();
+        console.log({ activeSemesterId: activeSemesterId || id });
         set((state) => {
           const semester = {
             ...data,
@@ -35,15 +48,21 @@ export const useSemesterStore = create(
           return {
             ...state,
             semesters: [semester, ...state.semesters],
+            activeSemesterId: activeSemesterId || id,
           };
         });
         return id;
       },
-      removeSemester: (course_id: string) => {
+      removeSemester: (semester_id: string) => {
+        const { activeSemesterId } = get();
+        const isActiveSessionToRemoved = semester_id === activeSemesterId;
+
         set((state) => {
+          const semesters = state.semesters.filter((semester) => semester.id !== semester_id);
           return {
             ...state,
-            semesters: state.semesters.filter((course) => course.id !== course_id),
+            semesters,
+            activeSemesterId: isActiveSessionToRemoved ? semesters[0]?.id : activeSemesterId,
           };
         });
       },

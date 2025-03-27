@@ -1,4 +1,10 @@
-import { Badges, Category, RotateClockwise2, SortAscendingShapes } from '@/components/icons';
+import {
+  Badges,
+  Category,
+  ComingSoon,
+  MessageReport,
+  SortAscendingShapes,
+} from '@/components/icons';
 import Text from '@/components/text';
 import { useBottomSheetContext } from '@/context/bottom-sheet-context';
 import { Link } from 'expo-router';
@@ -32,11 +38,7 @@ const PressableContent = forwardRef(
             <Text className="text-sm leading-4 text-[#bec3c9]">{description}</Text>
           </View>
         </View>
-        {comingSoon ? (
-          <View className="animate-spinReverse">
-            <RotateClockwise2 stroke="#5272ff45" />
-          </View>
-        ) : null}
+        {comingSoon ? <ComingSoon /> : null}
       </Pressable>
     );
   },
@@ -69,8 +71,14 @@ const Settings = () => {
         icon={SortAscendingShapes}
         title="Courses Order"
         description="Manage your courses order"
-        comingSoon
       />
+      <Link href="https://www.qudusayo.pro/contact-me" asChild>
+        <PressableContent
+          icon={MessageReport}
+          title="Feedback"
+          description="Send us your feedback"
+        />
+      </Link>
     </View>
   );
 };

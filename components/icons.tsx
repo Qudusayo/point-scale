@@ -1,5 +1,5 @@
 import * as React from 'react';
-import Svg, { Path } from 'react-native-svg';
+import Svg, { Path, Rect, Text } from 'react-native-svg';
 
 const Home = (props: React.ComponentProps<typeof Svg>) => (
   <Svg
@@ -244,6 +244,40 @@ const Adjustments = (props: React.ComponentProps<typeof Svg>) => (
   </Svg>
 );
 
+const MessageReport = (props: React.ComponentProps<typeof Svg>) => (
+  <Svg width={24} height={24} viewBox="0 0 24 24" fill="currentColor" {...props}>
+    <Path d="M0 0h24v24H0z" fill="none" />
+    <Path d="M18 3a4 4 0 0 1 4 4v8a4 4 0 0 1-4 4h-4.724l-4.762 2.857a1 1 0 0 1-1.508-.743L7 21v-2H6a4 4 0 0 1-3.995-3.8L2 15V7a4 4 0 0 1 4-4zm-6 10a1 1 0 0 0-1 1v.01a1 1 0 0 0 2 0V14a1 1 0 0 0-1-1m0-6a1 1 0 0 0-1 1v3a1 1 0 0 0 2 0V8a1 1 0 0 0-1-1" />
+  </Svg>
+);
+
+const ComingSoon = (props: React.ComponentProps<typeof Svg>) => (
+  <Svg width={80} height={20} {...props}>
+    <Rect
+      x={0}
+      y={0}
+      width={80}
+      height={20}
+      rx={10}
+      ry={40}
+      fill="#5271FF"
+      stroke="#FFFFFF"
+      strokeWidth={1}
+    />
+    <Text
+      x={40}
+      y={13}
+      textAnchor="middle"
+      fontFamily="AtkinsonHyperlegible-Regular, AtkinsonHyperlegible_400Regular, sans-serif"
+      fontSize={9}
+      fontWeight="bold"
+      fill="#FFF"
+    >
+      COMING SOON
+    </Text>
+  </Svg>
+);
+
 export {
   Adjustments,
   Badges,
@@ -251,6 +285,7 @@ export {
   ChartLine,
   CircleCheck,
   CircleDashedCheck,
+  ComingSoon,
   HexagonLetterA,
   HexagonLetterAPlus,
   HexagonLetterB,
@@ -259,6 +294,7 @@ export {
   HexagonLetterE,
   HexagonLetterF,
   Home,
+  MessageReport,
   Pencil,
   RotateClockwise2,
   Settings,

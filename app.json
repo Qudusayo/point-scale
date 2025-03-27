@@ -18,7 +18,8 @@
         "backgroundColor": "#ffffff"
       },
       "softwareKeyboardLayoutMode": "pan",
-      "package": "com.qudusayo.pointscale"
+      "package": "com.qudusayo.pointscale",
+      "versionCode": 3
     },
     "web": {
       "bundler": "metro",
@@ -34,6 +35,15 @@
           "imageWidth": 200,
           "resizeMode": "contain",
           "backgroundColor": "#ffffff"
+        }
+      ],
+      [
+        "expo-font",
+        {
+          "fonts": [
+            "node_modules/@expo-google-fonts/atkinson-hyperlegible/AtkinsonHyperlegible_400Regular.ttf",
+            "node_modules/@expo-google-fonts/atkinson-hyperlegible/AtkinsonHyperlegible_700Bold.ttf"
+          ]
         }
       ]
     ],

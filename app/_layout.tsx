@@ -1,4 +1,3 @@
-import { useFonts } from 'expo-font';
 import { Stack } from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
 import { StatusBar } from 'expo-status-bar';
@@ -24,15 +23,6 @@ export const unstable_settings = {
 };
 
 export default function RootLayout() {
-  const [loaded] = useFonts({
-    WinkySans: require('../assets/fonts/WinkySans.ttf'),
-    AtkinsonHyperlegible: require('../assets/fonts/AtkinsonHyperlegible.ttf'),
-  });
-
-  if (!loaded) {
-    return null;
-  }
-
   return (
     <BottomSheetProvider>
       <GestureHandlerRootView className="flex-2">

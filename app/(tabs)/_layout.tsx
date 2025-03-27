@@ -1,6 +1,6 @@
-import CourseOrderBottomSheetDisplay from '@/components/course-order-bottom-sheet';
+import CourseOrderBottomSheetDisplay from '@/components/bottom-sheets/course-order-bottom-sheet';
 import { HapticTab } from '@/components/HapticTab';
-import ResultBottomSheetDisplay from '@/components/result-bottom-sheet-display';
+import ResultBottomSheetDisplay from '@/components/bottom-sheets/result-bottom-sheet-display';
 import TabBar from '@/components/tab-bar';
 import Text from '@/components/text';
 import { Colors } from '@/constants/Colors';

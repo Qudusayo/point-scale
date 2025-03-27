@@ -11,11 +11,10 @@ module.exports = {
         primary: '#5271FF',
       },
       fontFamily: {
-        winkySans: ['WinkySans', 'sans-serif'],
         system: platformSelect({
-          ios: 'AtkinsonHyperlegible',
-          android: 'AtkinsonHyperlegible',
-          default: 'AtkinsonHyperlegible',
+          ios: 'AtkinsonHyperlegible-Regular',
+          android: 'AtkinsonHyperlegible_400Regular',
+          default: 'AtkinsonHyperlegible_400Regular',
         }),
       },
       animation: {

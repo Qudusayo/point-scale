@@ -4,8 +4,8 @@ import { useCourseStore } from '@/store/courses-store';
 import BottomSheet, { BottomSheetBackdrop, BottomSheetView } from '@gorhom/bottom-sheet';
 import React from 'react';
 import { View } from 'react-native';
-import { GetGradeIcon } from './getGradeIcon';
-import Text from './text';
+import { GetGradeIcon } from '../getGradeIcon';
+import Text from '../text';
 
 const ResultBottomSheetDisplay = () => {
   const { bottomSheetRef, activeResultId } = useBottomSheetContext();

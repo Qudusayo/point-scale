@@ -54,10 +54,10 @@ const ManageSemesters = () => {
   return (
     <SafeAreaView className="flex-1">
       <View className="android:pt-20 py-12">
-        <Text className="text-center text-2xl font-semibold uppercase text-primary">
+        <Text className="text-center text-2xl font-normal uppercase text-primary">
           Manage Semesters
         </Text>
-        <Text className="mx-auto w-11/12 text-center text-sm font-semibold text-gray-700">
+        <Text className="mx-auto w-11/12 text-center text-sm font-normal text-gray-700">
           Tap on a semester to delete it
         </Text>
       </View>

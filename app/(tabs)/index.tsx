@@ -10,7 +10,8 @@ import { View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 export default function HomeScreen() {
-  const courses = useCourseStore((store) => store.courses);
+  const getCourses = useCourseStore((store) => store.getCourses);
+  const courses = getCourses();
   const [totalCGPA, setTotalCGPA] = useState(0);
   const [totalWGPA, setTotalWGPA] = useState(0);
   const [totalUnits, setTotalUnits] = useState(0);
@@ -44,7 +45,7 @@ export default function HomeScreen() {
           <SafeAreaView className="mx-auto w-11/12 gap-8 py-8" edges={['top', 'left', 'right']}>
             <View className="items-center gap-2">
               <Text>Current CGPA</Text>
-              <Text className="text-7xl font-semibold text-primary">{totalCGPA.toFixed(2)}</Text>
+              <Text className="text-7xl font-normal text-primary">{totalCGPA.toFixed(2)}</Text>
             </View>
             <View className="flex-row gap-4">
               <DetailsCard title="Units Reg." value={totalUnits + ''} />
@@ -82,7 +83,7 @@ const DetailsCard = ({ title, value }: { title: string; value: string }) => {
   return (
     <View className="flex-1 items-center gap-1 rounded-lg bg-[#f3f4f6] p-4">
       <Text className="font-system text-sm text-[#606067]">{title}</Text>
-      <Text className="font-system text-2xl font-semibold text-primary">{value}</Text>
+      <Text className="font-system text-2xl font-normal text-primary">{value}</Text>
     </View>
   );
 };

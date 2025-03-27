@@ -3,14 +3,18 @@ import { useCourseStore } from '@/store/courses-store';
 import { useSemesterStore } from '@/store/semester-store';
 import { AntDesign } from '@expo/vector-icons';
 import { Link } from 'expo-router';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { FlatList, Pressable, View } from 'react-native';
 import ResultCard from './result-card';
 import Text from './text';
 
 const ResultList = ({ activeSemesterId }: { activeSemesterId: string | null }) => {
   const [cgpa, setCgpa] = useState(0);
-  const courses = useCourseStore((store) => store.courses);
+  const { getCourses, courseOrder } = useCourseStore((store) => store);
+  const courses = useMemo(() => {
+    const allCourses = getCourses();
+    return allCourses
+  }, [getCourses, courseOrder]);
   const results = courses.filter((course) => course.session_id === activeSemesterId);
   const semester = useSemesterStore((store) => store.semesters);
   const semesterDetails = semester.find((semester) => semester.id === activeSemesterId);

@@ -191,9 +191,64 @@ const RotateClockwise2 = (props: React.ComponentProps<typeof Svg>) => (
   </Svg>
 );
 
+const Target = (props: React.ComponentProps<typeof Svg>) => (
+  <Svg
+    width={24}
+    height={24}
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth={2}
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    {...props}
+  >
+    <Path d="M0 0h24v24H0z" stroke="none" />
+    <Path d="M11 12a1 1 0 1 0 2 0 1 1 0 1 0-2 0" />
+    <Path d="M7 12a5 5 0 1 0 10 0 5 5 0 1 0-10 0" />
+    <Path d="M3 12a9 9 0 1 0 18 0 9 9 0 1 0-18 0" />
+  </Svg>
+);
+
+const ChartLine = (props: React.ComponentProps<typeof Svg>) => (
+  <Svg
+    width={24}
+    height={24}
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth={2}
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    {...props}
+  >
+    <Path d="M0 0h24v24H0z" stroke="none" />
+    <Path d="M4 19h16M4 15l4-6 4 2 4-5 4 4" />
+  </Svg>
+);
+
+const Adjustments = (props: React.ComponentProps<typeof Svg>) => (
+  <Svg
+    width={24}
+    height={24}
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth={2}
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    {...props}
+  >
+    <Path d="M0 0h24v24H0z" stroke="none" />
+    <Path d="M4 10a2 2 0 1 0 4 0 2 2 0 0 0-4 0m2-6v4m0 4v8m4-4a2 2 0 1 0 4 0 2 2 0 0 0-4 0m2-12v10m0 4v2m4-13a2 2 0 1 0 4 0 2 2 0 0 0-4 0m2-3v1m0 4v11" />
+  </Svg>
+);
+
 export {
+  Adjustments,
   Badges,
   Category,
+  ChartLine,
   CircleCheck,
   CircleDashedCheck,
   HexagonLetterA,
@@ -208,5 +263,6 @@ export {
   RotateClockwise2,
   Settings,
   SortAscendingShapes,
+  Target,
   Trash,
 };

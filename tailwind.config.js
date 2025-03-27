@@ -19,12 +19,12 @@ module.exports = {
         }),
       },
       animation: {
-        spinReverse: "spinReverse 240s linear infinite",
+        spinReverse: 'spinReverse 240s linear infinite',
       },
       keyframes: {
         spinReverse: {
-          from: { transform: "rotate(0deg)" },
-          to: { transform: "rotate(-360deg)" },
+          from: { transform: 'rotate(0deg)' },
+          to: { transform: 'rotate(-360deg)' },
         },
       },
     },

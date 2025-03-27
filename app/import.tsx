@@ -64,7 +64,7 @@ const Import = () => {
         setActiveSemesterId(semesterId);
       } catch (error) {
         console.log('Error decrypting data:', error);
-      } 
+      }
     })();
   }, []);
 

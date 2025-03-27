@@ -38,5 +38,3 @@ yarn-error.*
 app-example
 ios
 android
-
-service-account-file.json

@@ -13,17 +13,21 @@ interface SemesterProps extends React.ComponentProps<typeof Pressable> {
 
 const Semester = ({ semester, onPress }: SemesterProps) => {
   return (
-    <Pressable
-      className="flex-row justify-between border-b border-gray-200 py-4 text-lg font-bold text-gray-800"
-      onPress={onPress}
-    >
+    <View className="flex-row items-center justify-between py-4 text-lg font-bold text-gray-800">
       <View className="leading-3">
         <Text className="text-xl">
           {semester.session} {semester.semester}
         </Text>
       </View>
-      <Trash stroke="#d50000a8" />
-    </Pressable>
+      <View className="flex-row gap-4">
+        {/* <Pressable onPress={() => {}} hitSlop={10} className="rounded-xl bg-[#5271FF] p-2">
+          <Pencil stroke="#fff" />
+        </Pressable> */}
+        <Pressable onPress={onPress} hitSlop={10} className="rounded-xl bg-[#d50000a8] p-2">
+          <Trash stroke="#fff" />
+        </Pressable>
+      </View>
+    </View>
   );
 };
 
@@ -55,15 +59,20 @@ const ManageSemesters = () => {
 
   return (
     <SafeAreaView className="flex-1 bg-white">
-      <PageHeader title="Manage Semesters" description="Tap on a semester to delete it" />
+      <PageHeader title="Manage Semesters" description="Take control of your semesters." />
       <FlatList
         data={semesters}
         keyExtractor={(item) => item.id}
         renderItem={({ item }) => (
           <Semester onPress={() => removeSemesterHandler(item.id)} semester={item} />
         )}
-        ListEmptyComponent={<Text>No semesters available</Text>}
-        contentContainerClassName="py-4 w-11/12 mx-auto"
+        ListEmptyComponent={
+          <View className="mt-8 items-center justify-center">
+            <Text className="text-lg text-gray-500">No semesters found</Text>
+          </View>
+        }
+        ItemSeparatorComponent={() => <View className="h-[1px] bg-gray-200" />}
+        contentContainerClassName="py-4 w-11/12 mx-auto flex-1"
         showsVerticalScrollIndicator={false}
       />
     </SafeAreaView>

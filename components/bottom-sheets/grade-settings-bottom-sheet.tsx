@@ -47,10 +47,10 @@ const GradeSettingsBottomSheet = () => {
         <TouchableOpacity
           activeOpacity={0.7}
           onPress={() => {}}
-          disabled={false}
+          disabled={true}
           className="mt-6 rounded-lg bg-primary py-3 disabled:opacity-50"
         >
-          <Text className="text-center text-lg text-white">Save</Text>
+          <Text className="text-center text-lg text-white">Coming Soon...</Text>
         </TouchableOpacity>
       </BottomSheetView>
     </BottomSheet>

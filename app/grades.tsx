@@ -1,4 +1,3 @@
-import GradeCard from '@/components/grade-card';
 import PageHeader from '@/components/page-header';
 import Text from '@/components/text';
 import { useBottomSheetContext } from '@/context/bottom-sheet-context';
@@ -14,11 +13,11 @@ const Settings = () => {
       <PageHeader title="Manage Grades" description="Manage your grades and their settings" />
       <View className="mx-auto w-11/12 gap-8 py-4">
         <View className="gap-4">
-          <GradeCard />
-          <GradeCard />
+          {/* <GradeCard />
+          <GradeCard /> */}
         </View>
         <TouchableOpacity
-          className="flex-row items-center justify-center gap-4 rounded-lg bg-primary p-4"
+          className="flex-row items-center justify-center gap-4 rounded-xl bg-primary p-3"
           onPress={() => open('gradeSettings')}
           activeOpacity={0.8}
         >
@@ -26,9 +25,9 @@ const Settings = () => {
           <Text className="text-lg text-white">Add new grade</Text>
         </TouchableOpacity>
 
-        <View className="flex-row items-start justify-center gap-4 rounded-lg bg-[#f3f4f6] px-6 py-4">
-          <Feather name="info" size={20} color="black" className="top-1" />
-          <Text className="flex-1 text-lg">
+        <View className="flex-row items-start justify-center gap-4 rounded-xl bg-[#f3f4f6] px-6 py-4">
+          <Feather name="info" size={20} color="#6b7280" className="top-1" />
+          <Text className="flex-1 text-base text-gray-500">
             Changes to grade settings will affect all future calculations. Historical grades will
             not be affected.
           </Text>

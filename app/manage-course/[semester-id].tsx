@@ -88,10 +88,10 @@ const AddCourse = () => {
   return (
     <SafeAreaView className="flex-1">
       <View className="android:pt-20 py-12">
-        <Text className="text-center text-2xl font-semibold uppercase text-primary">
+        <Text className="text-center text-2xl uppercase text-primary">
           {course ? 'Update Course' : 'Add New Course'}
         </Text>
-        <Text className="mx-auto w-11/12 text-center text-sm font-semibold text-gray-700">
+        <Text className="mx-auto w-11/12 text-center text-sm text-gray-700">
           {semester?.session} {semester?.semester}
         </Text>
       </View>
@@ -237,7 +237,7 @@ const AddCourse = () => {
             !formData.isValid || formData.isSubmitting || formData.isValidating || !formData.dirty
           }
         >
-          <Text className="text-center text-xl font-semibold text-white">
+          <Text className="text-center text-xl text-white">
             {course ? 'Update Course' : 'Add Course'}
           </Text>
         </Pressable>

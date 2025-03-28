@@ -10,11 +10,11 @@ import Text from './text';
 
 const ResultList = ({ activeSemesterId }: { activeSemesterId: string | null }) => {
   const [cgpa, setCgpa] = useState(0);
-  const { getCourses, courseOrder } = useCourseStore((store) => store);
+  const { getCourses, courseOrder, courses: default_list } = useCourseStore((store) => store);
   const courses = useMemo(() => {
     const allCourses = getCourses();
     return allCourses;
-  }, [getCourses, courseOrder]);
+  }, [getCourses, courseOrder, default_list]);
   const results = courses.filter((course) => course.session_id === activeSemesterId);
   const semester = useSemesterStore((store) => store.semesters);
   const semesterDetails = semester.find((semester) => semester.id === activeSemesterId);
@@ -60,9 +60,7 @@ const ResultList = ({ activeSemesterId }: { activeSemesterId: string | null }) =
       contentContainerClassName="gap-4 pb-28"
       ListEmptyComponent={
         <View className="mt-12 flex-1 self-center justify-self-center">
-          <Text className="text-center text-xl font-medium text-[#606067]">
-            No courses added yet
-          </Text>
+          <Text className="text-center text-xl text-black">No courses added yet</Text>
           <Text className="text-center text-sm text-[#606067]">
             Tap the button above to add a course
           </Text>

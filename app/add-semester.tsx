@@ -73,7 +73,7 @@ const AddSemester = () => {
             !formData.isValid || formData.isSubmitting || formData.isValidating || !formData.dirty
           }
         >
-          <Text className="text-center text-xl font-semibold text-white">Add Semester</Text>
+          <Text className="text-center text-xl text-white">Add Semester</Text>
         </Pressable>
       </View>
       <Toast />

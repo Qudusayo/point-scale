@@ -10,7 +10,7 @@ import { View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 export default function HomeScreen() {
-  const getCourses = useCourseStore((store) => store.getCourses);
+  const { getCourses, courses: default_list } = useCourseStore((store) => store);
   const courses = getCourses();
   const [totalCGPA, setTotalCGPA] = useState(0);
   const [totalWGPA, setTotalWGPA] = useState(0);
@@ -36,7 +36,7 @@ export default function HomeScreen() {
 
   useEffect(() => {
     calculateTotalCGPA();
-  }, [courses, activeSemesterId]);
+  }, [activeSemesterId, default_list]);
 
   return (
     <View className="flex-1">
@@ -66,9 +66,7 @@ export default function HomeScreen() {
           </View>
         ) : (
           <View className="mt-12 flex-1 self-center justify-self-center">
-            <Text className="text-center text-xl font-medium text-[#606067]">
-              No semesters added yet
-            </Text>
+            <Text className="text-center text-xl text-black">No semesters added yet</Text>
             <Text className="text-center text-sm text-[#606067]">
               Tap the + button above to add a semester
             </Text>

@@ -1,11 +1,7 @@
 import { getGrade } from '@/constants/utils';
 import { useBottomSheetContext } from '@/context/bottom-sheet-context';
 import { useCourseStore } from '@/store/courses-store';
-import BottomSheet, {
-  BottomSheetBackdrop,
-  BottomSheetTextInput,
-  BottomSheetView,
-} from '@gorhom/bottom-sheet';
+import BottomSheet, { BottomSheetBackdrop, BottomSheetView } from '@gorhom/bottom-sheet';
 import React from 'react';
 import { View } from 'react-native';
 import { GetGradeIcon } from '../getGradeIcon';
@@ -28,17 +24,6 @@ const ResultBottomSheet = () => {
           <Text className="text-sm">Course Code:</Text>
           <Text className="text-2xl">{course?.course_code}</Text>
         </View>
-        <BottomSheetTextInput
-          style={{
-            marginTop: 8,
-            marginBottom: 10,
-            borderRadius: 10,
-            fontSize: 16,
-            lineHeight: 20,
-            padding: 8,
-            backgroundColor: 'rgba(151, 151, 151, 0.25)',
-          }}
-        />
         <View className="mb-4">
           <Text className="text-sm">Course Title</Text>
           <Text className="text-2xl">{course?.course_title}</Text>

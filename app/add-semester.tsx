@@ -33,16 +33,13 @@ const AddSemester = () => {
 
   return (
     <SafeAreaView className="flex-1">
-      <Text className="py-12 text-center text-2xl font-semibold uppercase text-primary">
-        Add New Semester
-      </Text>
+      <Text className="py-12 text-center text-2xl uppercase text-primary">Add New Semester</Text>
 
       <View className="mx-auto w-11/12 gap-4">
         <View>
           <Text className="mb-1 text-[#606067]">Level</Text>
           <TextInput
             className={cn(
-              'rounded-lg border border-gray-300 p-2 font-system',
               formData.touched.session && formData.errors.session
                 ? 'border-red-500'
                 : 'border-gray-300',
@@ -58,7 +55,6 @@ const AddSemester = () => {
           <Text className="mb-1 text-[#606067]">Semester</Text>
           <TextInput
             className={cn(
-              'rounded-lg border border-gray-300 p-2 font-system',
               formData.touched.semester && formData.errors.semester
                 ? 'border-red-500'
                 : 'border-gray-300',
@@ -71,7 +67,7 @@ const AddSemester = () => {
         </View>
 
         <Pressable
-          className="mt-4 rounded-lg bg-primary py-3 disabled:opacity-50"
+          className="mt-4 rounded-xl bg-primary py-3 disabled:opacity-50"
           onPress={() => formData.handleSubmit()}
           disabled={
             !formData.isValid || formData.isSubmitting || formData.isValidating || !formData.dirty

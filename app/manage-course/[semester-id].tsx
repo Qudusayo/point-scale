@@ -101,7 +101,7 @@ const AddCourse = () => {
           <Text className="mb-1 text-[#606067]">Course Title</Text>
           <TextInput
             className={cn(
-              'rounded-lg border border-gray-300 p-2 font-system',
+              'p-2 font-system',
               formData.touched.courseTitle && formData.errors.courseTitle
                 ? 'border-red-500'
                 : 'border-gray-300',
@@ -117,7 +117,7 @@ const AddCourse = () => {
           <Text className="mb-1 text-[#606067]">Course Code</Text>
           <TextInput
             className={cn(
-              'rounded-lg border border-gray-300 p-2 font-system',
+              'p-2 font-system',
               formData.touched.courseCode && formData.errors.courseCode
                 ? 'border-red-500'
                 : 'border-gray-300',
@@ -133,7 +133,7 @@ const AddCourse = () => {
           <Text className="mb-1 text-[#606067]">Score</Text>
           <TextInput
             className={cn(
-              'rounded-lg border border-gray-300 p-2 font-system',
+              'p-2 font-system',
               formData.touched.courseScore && formData.errors.courseScore
                 ? 'border-red-500'
                 : 'border-gray-300',
@@ -211,7 +211,7 @@ const AddCourse = () => {
               </Modal>
             </View>
           ) : (
-            <View className="rounded-lg border border-gray-300">
+            <View className="">
               <Picker
                 // selectedValue={courseUnit}
                 selectedValue={formData.values.courseUnit}

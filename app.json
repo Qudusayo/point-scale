@@ -19,7 +19,7 @@
       },
       "softwareKeyboardLayoutMode": "pan",
       "package": "com.qudusayo.pointscale",
-      "versionCode": 3
+      "versionCode": 4
     },
     "web": {
       "bundler": "metro",

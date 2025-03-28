@@ -3,13 +3,17 @@ import {
   Category,
   ComingSoon,
   MessageReport,
+  RoudedArrowDown,
   SortAscendingShapes,
 } from '@/components/icons';
+import PageHeader from '@/components/page-header';
 import Text from '@/components/text';
 import { useBottomSheetContext } from '@/context/bottom-sheet-context';
 import { Link } from 'expo-router';
+import * as WebBrowser from 'expo-web-browser';
 import React, { forwardRef } from 'react';
 import { Pressable, View } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import Svg from 'react-native-svg';
 
 interface PressableContentProps extends React.ComponentProps<typeof Pressable> {
@@ -55,15 +59,24 @@ const NavLink = ({ href = '/settings', ...props }: NavLinkProps) => {
 const Settings = () => {
   const { open } = useBottomSheetContext();
 
+  const openWebBrowser = async (url: string) => {
+    try {
+      await WebBrowser.openBrowserAsync(url);
+    } catch (error) {
+      console.error('Error opening browser:', error);
+    }
+  };
+
   return (
-    <View className="flex-1 gap-8 bg-white pt-4">
+    <SafeAreaView className="flex-1 gap-8 bg-white">
+      <PageHeader title="Settings" description="Manage your app settings" showBackButton={false} />
       <NavLink
         title="Semesters"
         description="Manage your semesters"
         icon={Category}
         href="/manage-semesters"
       />
-      <NavLink title="Grades" description="Manage your grades" icon={Badges} comingSoon />
+      <NavLink title="Grades" description="Manage your grades" icon={Badges} href="/grades" />
       <PressableContent
         onPress={() => {
           open('courseOrder');
@@ -72,14 +85,20 @@ const Settings = () => {
         title="Courses Order"
         description="Manage your courses order"
       />
-      <Link href="https://www.qudusayo.pro/contact-me" asChild>
-        <PressableContent
-          icon={MessageReport}
-          title="Feedback"
-          description="Send us your feedback"
-        />
-      </Link>
-    </View>
+      <PressableContent
+        onPress={() => {}}
+        icon={RoudedArrowDown}
+        title="Download Results"
+        description="Download and share your results"
+        comingSoon
+      />
+      <PressableContent
+        icon={MessageReport}
+        title="Feedback"
+        description="Send us your feedback"
+        onPress={() => openWebBrowser('https://www.qudusayo.pro/contact-me')}
+      />
+    </SafeAreaView>
   );
 };
 

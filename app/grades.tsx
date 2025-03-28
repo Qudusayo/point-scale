@@ -1,19 +1,25 @@
 import GradeCard from '@/components/grade-card';
+import PageHeader from '@/components/page-header';
 import Text from '@/components/text';
+import { useBottomSheetContext } from '@/context/bottom-sheet-context';
 import Feather from '@expo/vector-icons/Feather';
-import { SafeAreaView, TouchableOpacity, View } from 'react-native';
+import { TouchableOpacity, View } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 const Settings = () => {
+  const { open } = useBottomSheetContext();
+
   return (
-    <SafeAreaView className="flex-1 items-center bg-[#f9fafb]">
-      <View className="w-11/12 gap-8 py-4">
+    <SafeAreaView className="flex-1 bg-white">
+      <PageHeader title="Manage Grades" description="Manage your grades and their settings" />
+      <View className="mx-auto w-11/12 gap-8 py-4">
         <View className="gap-4">
           <GradeCard />
           <GradeCard />
         </View>
         <TouchableOpacity
           className="flex-row items-center justify-center gap-4 rounded-lg bg-primary p-4"
-          onPress={() => {}}
+          onPress={() => open('gradeSettings')}
           activeOpacity={0.8}
         >
           <Feather name="plus" size={24} color="white" />

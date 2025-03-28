@@ -11,6 +11,7 @@ configureReanimatedLogger({
   strict: true,
 });
 
+import GradeSettingsBottomSheet from '@/components/bottom-sheets/grade-settings-bottom-sheet';
 import { BottomSheetProvider } from '@/context/bottom-sheet-context';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 
@@ -41,7 +42,13 @@ export default function RootLayout() {
           <Stack.Screen
             name="manage-semesters"
             options={{
-              presentation: 'modal',
+              headerShown: false,
+              animation: 'slide_from_right',
+            }}
+          />
+          <Stack.Screen
+            name="grades"
+            options={{
               headerShown: false,
               animation: 'slide_from_right',
             }}
@@ -72,6 +79,7 @@ export default function RootLayout() {
         </Stack>
         <StatusBar style="auto" />
         {/* </ThemeProvider> */}
+        <GradeSettingsBottomSheet />
       </GestureHandlerRootView>
     </BottomSheetProvider>
   );

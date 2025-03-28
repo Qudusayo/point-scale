@@ -1,10 +1,11 @@
 import { cn } from '@/lib/utils';
+import { BottomSheetTextInput as TextInput } from '@gorhom/bottom-sheet';
 import React from 'react';
-import { TextInput as ExpoTextInput, Platform } from 'react-native';
+import { Platform } from 'react-native';
 
-const TextInput = (props: React.ComponentProps<typeof ExpoTextInput>) => {
+const BottomSheetTextInput = (props: React.ComponentProps<typeof TextInput>) => {
   return (
-    <ExpoTextInput
+    <TextInput
       {...props}
       style={[
         props.style,
@@ -22,8 +23,8 @@ const TextInput = (props: React.ComponentProps<typeof ExpoTextInput>) => {
         },
       ]}
       className={cn(props.className, 'rounded-xl border border-gray-300 font-system')}
-    ></ExpoTextInput>
+    ></TextInput>
   );
 };
 
-export default TextInput;
+export default BottomSheetTextInput;

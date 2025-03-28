@@ -2,7 +2,7 @@
 import BottomSheet from '@gorhom/bottom-sheet';
 import React, { createContext, useCallback, useRef, useState } from 'react';
 
-type bottomSheetTypes = 'result' | 'courseOrder';
+type bottomSheetTypes = 'result' | 'courseOrder' | 'gradeSettings';
 interface BottomSheetContextType {
   activeResultId: string | undefined;
   setActiveResultId: React.Dispatch<React.SetStateAction<string | undefined>>;
@@ -10,6 +10,7 @@ interface BottomSheetContextType {
   open: (type: bottomSheetTypes) => void;
   close: (type: bottomSheetTypes) => void;
   courseOrderBottomSheetRef: React.RefObject<BottomSheet>;
+  gradeSettingsBottomSheetRef: React.RefObject<BottomSheet>;
 }
 
 const BottomSheetContext = createContext<BottomSheetContextType | null>(null);
@@ -17,6 +18,7 @@ const BottomSheetContext = createContext<BottomSheetContextType | null>(null);
 export const BottomSheetProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const bottomSheetRef = useRef<BottomSheet>(null);
   const courseOrderBottomSheetRef = useRef<BottomSheet>(null);
+  const gradeSettingsBottomSheetRef = useRef<BottomSheet>(null);
   const [activeResultId, setActiveResultId] = useState<string | undefined>(undefined);
 
   // callbacks
@@ -31,6 +33,9 @@ export const BottomSheetProvider: React.FC<{ children: React.ReactNode }> = ({ c
         break;
       case 'courseOrder':
         courseOrderBottomSheetRef.current?.snapToIndex(1);
+        break;
+      case 'gradeSettings':
+        gradeSettingsBottomSheetRef.current?.snapToIndex(1);
         break;
       default:
         break;
@@ -58,6 +63,7 @@ export const BottomSheetProvider: React.FC<{ children: React.ReactNode }> = ({ c
         open,
         close,
         courseOrderBottomSheetRef,
+        gradeSettingsBottomSheetRef,
       }}
     >
       {children}

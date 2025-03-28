@@ -1,6 +1,6 @@
-import CourseOrderBottomSheetDisplay from '@/components/bottom-sheets/course-order-bottom-sheet';
+import CourseOrderBottomSheet from '@/components/bottom-sheets/course-order-bottom-sheet';
+import ResultBottomSheet from '@/components/bottom-sheets/result-bottom-sheet-display';
 import { HapticTab } from '@/components/HapticTab';
-import ResultBottomSheetDisplay from '@/components/bottom-sheets/result-bottom-sheet-display';
 import TabBar from '@/components/tab-bar';
 import Text from '@/components/text';
 import { Colors } from '@/constants/Colors';
@@ -51,13 +51,13 @@ export default function TabLayout() {
         <Tabs.Screen
           name="settings"
           options={{
-            title: 'Settings',
+            headerShown: false,
             headerLeft: () => <HeaderLeft text="Settings" />,
           }}
         />
       </Tabs>
-      <ResultBottomSheetDisplay />
-      <CourseOrderBottomSheetDisplay />
+      <ResultBottomSheet />
+      <CourseOrderBottomSheet />
     </>
   );
 }

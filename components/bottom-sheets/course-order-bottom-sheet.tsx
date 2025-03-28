@@ -6,7 +6,7 @@ import { Pressable, TouchableOpacity, View } from 'react-native';
 import { CircleCheck } from '../icons';
 import Text from '../text';
 
-const CourseOrderBottomSheetDisplay = () => {
+const CourseOrderBottomSheet = () => {
   const { courseOrderBottomSheetRef, close } = useBottomSheetContext();
   const { courseOrder, setCourseOrder } = useCourseStore((store) => store);
 
@@ -93,4 +93,4 @@ const Selector = ({ selected = false, title, description, onPress }: SelectorPro
   );
 };
 
-export default CourseOrderBottomSheetDisplay;
+export default CourseOrderBottomSheet;

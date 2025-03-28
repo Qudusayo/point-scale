@@ -13,7 +13,7 @@ const ResultList = ({ activeSemesterId }: { activeSemesterId: string | null }) =
   const { getCourses, courseOrder } = useCourseStore((store) => store);
   const courses = useMemo(() => {
     const allCourses = getCourses();
-    return allCourses
+    return allCourses;
   }, [getCourses, courseOrder]);
   const results = courses.filter((course) => course.session_id === activeSemesterId);
   const semester = useSemesterStore((store) => store.semesters);

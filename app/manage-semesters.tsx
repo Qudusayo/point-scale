@@ -1,9 +1,11 @@
 import { Trash } from '@/components/icons';
+import PageHeader from '@/components/page-header';
 import Text from '@/components/text';
 import { useCourseStore } from '@/store/courses-store';
 import { SemesterType, useSemesterStore } from '@/store/semester-store';
 import React from 'react';
-import { Alert, FlatList, Pressable, SafeAreaView, View } from 'react-native';
+import { Alert, FlatList, Pressable, View } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 interface SemesterProps extends React.ComponentProps<typeof Pressable> {
   semester: SemesterType;
@@ -52,15 +54,8 @@ const ManageSemesters = () => {
   };
 
   return (
-    <SafeAreaView className="flex-1">
-      <View className="android:pt-20 py-12">
-        <Text className="text-center text-2xl font-normal uppercase text-primary">
-          Manage Semesters
-        </Text>
-        <Text className="mx-auto w-11/12 text-center text-sm font-normal text-gray-700">
-          Tap on a semester to delete it
-        </Text>
-      </View>
+    <SafeAreaView className="flex-1 bg-white">
+      <PageHeader title="Manage Semesters" description="Tap on a semester to delete it" />
       <FlatList
         data={semesters}
         keyExtractor={(item) => item.id}
@@ -68,7 +63,7 @@ const ManageSemesters = () => {
           <Semester onPress={() => removeSemesterHandler(item.id)} semester={item} />
         )}
         ListEmptyComponent={<Text>No semesters available</Text>}
-        contentContainerClassName="p-4"
+        contentContainerClassName="py-4 w-11/12 mx-auto"
         showsVerticalScrollIndicator={false}
       />
     </SafeAreaView>

@@ -30,7 +30,7 @@ export const useCourseStore = create(
   persist<CoursesState>(
     (set, get) => ({
       courses: [],
-      courseOrder: 'result',
+      courseOrder: 'default',
       setCourseOrder: (order: CoursesOrder) => {
         set((state) => ({
           ...state,

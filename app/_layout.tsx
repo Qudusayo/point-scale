@@ -34,9 +34,8 @@ export default function RootLayout() {
           <Stack.Screen
             name="manage-course/[semester-id]"
             options={{
-              presentation: 'modal',
               headerShown: false,
-              animation: 'slide_from_bottom',
+              animation: 'slide_from_right',
             }}
           />
           <Stack.Screen
@@ -56,7 +55,6 @@ export default function RootLayout() {
           <Stack.Screen
             name="import"
             options={{
-              presentation: 'modal',
               headerShown: false,
               animation: 'slide_from_right',
             }}
@@ -64,9 +62,8 @@ export default function RootLayout() {
           <Stack.Screen
             name="add-semester"
             options={{
-              presentation: 'modal',
               headerShown: false,
-              animation: 'slide_from_bottom',
+              animation: 'slide_from_right',
             }}
           />
           <Stack.Screen

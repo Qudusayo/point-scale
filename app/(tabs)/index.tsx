@@ -40,7 +40,7 @@ export default function HomeScreen() {
 
   return (
     <View className="flex-1">
-      <View className="flex-1">
+      <View className="flex-1 bg-[#f3f4f6]">
         <View className="bg-white">
           <SafeAreaView className="mx-auto w-11/12 gap-8 py-8" edges={['top', 'left', 'right']}>
             <View className="items-center gap-2">

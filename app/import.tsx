@@ -1,4 +1,5 @@
 import { CircleDashedCheck } from '@/components/icons';
+import PageHeader from '@/components/page-header';
 import Text from '@/components/text';
 import { decryptJSON } from '@/lib/decryptor';
 import { useCourseStore } from '@/store/courses-store';
@@ -6,7 +7,7 @@ import { useSemesterStore } from '@/store/semester-store';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useLocalSearchParams } from 'expo-router';
 import React, { useEffect } from 'react';
-import { SafeAreaView } from 'react-native';
+import { SafeAreaView, View } from 'react-native';
 
 interface ResultType {
   id: string;
@@ -69,9 +70,12 @@ const Import = () => {
   }, []);
 
   return (
-    <SafeAreaView className="mt-40 flex-1 flex-col items-center gap-8">
-      <CircleDashedCheck width={140} height={140} strokeWidth={1} stroke="#5271FF" />
-      <Text className="text-3xl uppercase text-[#5271FF]">Import Successful</Text>
+    <SafeAreaView className="flex-1 bg-white">
+      <PageHeader title="Results Import" description="Import your results" />
+      <View className="mt-40 flex-1 flex-col items-center gap-8">
+        <CircleDashedCheck width={140} height={140} strokeWidth={1} stroke="#5271FF" />
+        <Text className="text-3xl uppercase text-[#5271FF]">Import Successful</Text>
+      </View>
     </SafeAreaView>
   );
 };

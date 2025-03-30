@@ -1,3 +1,4 @@
+import PageHeader from '@/components/page-header';
 import Text from '@/components/text';
 import TextInput from '@/components/text-input';
 import { toast } from '@/lib/toast';
@@ -32,10 +33,10 @@ const AddSemester = () => {
   });
 
   return (
-    <SafeAreaView className="flex-1">
-      <Text className="py-12 text-center text-2xl uppercase text-primary">Add New Semester</Text>
+    <SafeAreaView className="flex-1 bg-white">
+      <PageHeader title="Add Semester" description="Add a new semester to your academic record" />
 
-      <View className="mx-auto w-11/12 gap-4">
+      <View className="mx-auto mt-12 w-11/12 gap-4">
         <View>
           <Text className="mb-1 text-[#606067]">Level</Text>
           <TextInput

@@ -1,3 +1,4 @@
+import PageHeader from '@/components/page-header';
 import Text from '@/components/text';
 import TextInput from '@/components/text-input';
 import { toast } from '@/lib/toast';
@@ -87,16 +88,11 @@ const AddCourse = () => {
 
   return (
     <SafeAreaView className="flex-1">
-      <View className="android:pt-20 py-12">
-        <Text className="text-center text-2xl uppercase text-primary">
-          {course ? 'Update Course' : 'Add New Course'}
-        </Text>
-        <Text className="mx-auto w-11/12 text-center text-sm text-gray-700">
-          {semester?.session} {semester?.semester}
-        </Text>
-      </View>
-
-      <View className="mx-auto w-11/12 gap-4">
+      <PageHeader
+        title={course ? 'Update Course' : 'Add New Course'}
+        description={(semester?.session || '') + (semester?.semester || '')}
+      />
+      <View className="mx-auto mt-12 w-11/12 gap-4">
         <View>
           <Text className="mb-1 text-[#606067]">Course Title</Text>
           <TextInput

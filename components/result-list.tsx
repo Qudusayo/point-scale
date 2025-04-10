@@ -15,35 +15,33 @@ import { GetGradeIcon } from './getGradeIcon';
 import { Pencil } from './icons';
 import Text from './text';
 
-function RightAction({ onPress }: React.ComponentProps<typeof Pressable>) {
-  return (
-    <Pressable
-      className="block h-full w-1/5 items-center justify-center rounded-lg rounded-l-none bg-[#DC3545]"
-      onPress={onPress}
-    >
-      <Feather name="trash-2" size={24} color="#fff" />
-    </Pressable>
-  );
-}
-
-interface LeftActionProps extends React.ComponentProps<typeof Pressable> {
+interface ActionProps extends React.ComponentProps<typeof Pressable> {
+  onPress: () => void;
   semesterId: string;
   courseId: string;
 }
 
-function LeftAction({ semesterId, courseId }: LeftActionProps) {
+function RightAction({ semesterId, courseId, onPress }: ActionProps) {
   return (
-    <Link
-      href={{
-        pathname: `/manage-course/${semesterId}`,
-        params: { 'course-id': courseId },
-      }}
-      asChild
-    >
-      <Pressable className="block h-full w-1/5 items-center justify-center rounded-lg rounded-r-none bg-[#5271FF]">
-        <Pencil stroke="#fff" />
+    <View className="h-full w-2/5 flex-row">
+      <Link
+        href={{
+          pathname: `/manage-course/${semesterId}`,
+          params: { 'course-id': courseId },
+        }}
+        asChild
+      >
+        <Pressable className="block h-full flex-1 items-center justify-center bg-[#5271FF]">
+          <Pencil stroke="#fff" />
+        </Pressable>
+      </Link>
+      <Pressable
+        className="block h-full flex-1 items-center justify-center rounded-lg rounded-l-none bg-[#DC3545]"
+        onPress={onPress}
+      >
+        <Feather name="trash-2" size={24} color="#fff" />
       </Pressable>
-    </Link>
+    </View>
   );
 }
 
@@ -123,8 +121,9 @@ const ResultList = ({ activeSemesterId }: { activeSemesterId: string | null }) =
         friction={2}
         enableTrackpadTwoFingerGesture
         rightThreshold={40}
-        renderRightActions={() => <RightAction onPress={handleDelete} />}
-        renderLeftActions={() => <LeftAction courseId={item.id} semesterId={item.session_id} />}
+        renderRightActions={() => (
+          <RightAction onPress={handleDelete} courseId={item.id} semesterId={item.session_id} />
+        )}
         overshootFriction={0}
         dragOffsetFromRightEdge={40}
         overshootLeft={false}

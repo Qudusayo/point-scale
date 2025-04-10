@@ -19,7 +19,7 @@ const Settings = () => {
             <Text className="text-sm leading-4">Used to calculate your grades.</Text>
           </View>
 
-          <Text className="absolute right-0 pt-2 text-5xl text-primary ">4.0</Text>
+          <Text className="absolute right-0 pt-2 text-5xl text-primary">4.0</Text>
         </View>
         <View className="flex-1 rounded-lg bg-[#f3f4f6] px-3">
           <TableFlatList />
@@ -37,7 +37,8 @@ const Settings = () => {
         <View className="flex-row items-start justify-center gap-4 rounded-xl bg-[#f3f4f6] px-6 py-4">
           <Feather name="info" size={20} color="#6b7280" className="top-1" />
           <Text className="flex-1 text-base text-gray-500">
-            Changes to grade settings will affect all future calculations. You can swipe the table data left to remove them.
+            Changes to grade settings will affect all future calculations. You can swipe the table
+            data left to remove them.
           </Text>
         </View>
       </View>

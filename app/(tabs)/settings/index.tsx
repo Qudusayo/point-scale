@@ -76,14 +76,7 @@ const Settings = () => {
         icon={Category}
         href="/manage-semesters"
       />
-      <PressableContent
-        title="Grades"
-        description="Manage your grades"
-        icon={Badges}
-        // href="/grades"
-        onPress={() => {}}
-        comingSoon
-      />
+      <NavLink title="Grades" description="Manage your grades" icon={Badges} href="/grades" />
       <PressableContent
         onPress={() => {
           open('courseOrder');
